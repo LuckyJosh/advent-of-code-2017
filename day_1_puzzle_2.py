@@ -9,7 +9,7 @@ def solve_captcha(captcha):
     if len(captcha) == 0:
         return 0
     cap = np.asarray(captcha, dtype=int)
-    mask = cap == np.roll(cap, np.floor_devide(cap.size, 2))
+    mask = cap == np.roll(cap, np.floor_divide(cap.size, 2))
     selection = cap[mask]
     return np.sum(selection)
 
