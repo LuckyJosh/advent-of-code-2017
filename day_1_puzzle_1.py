@@ -10,9 +10,7 @@ def solve_captcha(captcha):
     if len(captcha) == 0:
         return 0
     cap = np.asarray(captcha, dtype=int)
-    mask = np.zeros_like(cap, dtype=bool)
-    mask[:-1] = cap[:-1] == cap[1:]
-    mask[-1] = cap[0] == cap[-1]
+    mask = cap == np.roll(cap, 1)
     selection = cap[mask]
     return np.sum(selection)
 
