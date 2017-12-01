@@ -23,10 +23,12 @@ def test_examples():
     solution = [solve_captcha(example) for example in example_inputs]
     assert solution == example_outputs
 
+
 def main():
     test_examples()
     test_input = ""
     print(f"Solution for test input: {solve_captcha(test_input)}")
+
 
 if __name__ == '__main__':
     main()
