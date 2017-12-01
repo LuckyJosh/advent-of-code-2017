@@ -4,6 +4,7 @@ import numpy as np
 
 
 def solve_captcha(captcha):
+    # @documentation: All or parts of the documentation is missing!
     if isinstance(captcha, str):
         captcha = list(captcha)
     if len(captcha) == 0:
@@ -15,6 +16,7 @@ def solve_captcha(captcha):
 
 
 def test_examples():
+    # @documentation: All or parts of the documentation is missing!
     example_inputs = ["1212", "1221", "123425", "123123", "12131415"]
     example_outputs = [6, 0, 4, 12, 4]
 
