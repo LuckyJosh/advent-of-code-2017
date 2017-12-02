@@ -3,7 +3,7 @@
 import click
 import numpy as np
 
-from . import get_input
+from .download_input import get_input
 
 def solve_captcha_puzzle_1(captcha):
     # @documentation: All or parts of the documentation is missing!
