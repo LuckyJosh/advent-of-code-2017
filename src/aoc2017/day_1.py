@@ -27,14 +27,6 @@ def solve_captcha_puzzle_2(captcha):
     return np.sum(selection)
 
 
-def test_examples_puzzle_2():
-    # @documentation: All or parts of the documentation is missing!
-    example_inputs = ["1212", "1221", "123425", "123123", "12131415"]
-    example_outputs = [6, 0, 4, 12, 4]
-
-    solution = [solve_captcha_puzzle_2(example) for example in example_inputs]
-    assert solution == example_outputs
-
 @click.command()
 def main():
     test_examples_puzzle_1()
