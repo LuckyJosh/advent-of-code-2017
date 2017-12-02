@@ -6,7 +6,7 @@ import numpy as np
 
 
 def checksum_puzzle_1(spreadsheet):
-
+    pass
 
 
 @click.command()
