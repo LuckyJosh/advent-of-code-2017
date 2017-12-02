@@ -12,9 +12,6 @@ click_completion.install(shell="fish", prog_name="aoc-2017")
 click_completion.install(shell="bash", prog_name="aoc-2017")
 
 
-
-
-
 @click.group()
 def cli_entry_point():
     if 'AOC_SESSION' not in os.environ:
