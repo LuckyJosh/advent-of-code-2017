@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# encoding: utf-8
+
 from aoc2017.day_2 import checksum_puzzle_1
 
 def test_checksum_puzzle_1():
