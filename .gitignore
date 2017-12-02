@@ -5,3 +5,4 @@
 .eggs/
 src/aoc2017.egg-info/
 src/aoc2017/__pycache__/
+.cache
