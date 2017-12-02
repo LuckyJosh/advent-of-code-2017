@@ -1,1 +1,7 @@
+# editor
 **/.vscode
+
+# python package
+.eggs/
+src/aoc2017.egg-info/
+src/aoc2017/__pycache__/
