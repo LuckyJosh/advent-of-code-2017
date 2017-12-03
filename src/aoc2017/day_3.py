@@ -9,6 +9,7 @@ from .download_input import get_input
 
 def spiral_memory_steps_1(data_location):
     # @documentation: All or parts of the documentation is missing!
+    data_location = int(data_location)
 
     # internally to this function, data location start at 0 not at 1!
     if data_location < 1:
