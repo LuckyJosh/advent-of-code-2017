@@ -12,7 +12,7 @@ def checksum_puzzle_1(spreadsheet):
 
 @click.command()
 def main():
-    print("Input:", get_input(2))
+    print("Input:\n", get_input(2))
 
 if __name__ == '__main__':
     main()
