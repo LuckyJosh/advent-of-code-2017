@@ -50,7 +50,7 @@ def spiral_memory_steps_2(data):
     used_indicies_with_values = {}
 
     # @hack: There has to be a better way to do this!
-    additional_shape = [3, 4, 4, 5, 6]
+    additional_shape = [2, 2, 1, 1, 1]
     if data <= 5:
         shape = data + additional_shape[data-1]
     else:
