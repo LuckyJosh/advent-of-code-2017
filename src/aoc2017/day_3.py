@@ -30,14 +30,13 @@ def spiral_memory_steps_1(data_location):
             current_index = indicies[loc-1, :]
             new_indicies = current_index + moves
             not_used = [tuple(idx) not in used_indicies for idx in new_indicies]
-            distance_to_center = np.linalg.norm(indicies[0, :] - new_indicies[not_used])
+            distance_to_center = np.linalg.norm(indicies[0, :] - new_indicies[not_used], axis=1)
             min_distance = np.argmin(distance_to_center)
 
             used_indicies.add(tuple(new_indicies[min_distance]))
             indicies[loc, :] = new_indicies[min_distance]
 
     num_steps = np.sum(np.abs(indicies[-1, :]))
-
     return num_steps
 
 
@@ -45,7 +44,7 @@ def spiral_memory_steps_1(data_location):
 def main():
     input_ = get_input(3)
     print("Input:\n", input_)
-    print("Output:" )
+    print("Output:", spiral_memory_steps_1(9))
 
 
 if __name__ == '__main__':
