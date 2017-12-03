@@ -34,7 +34,9 @@ def checksum_puzzle_2(spreadsheet):
 def main():
     test_input = get_input(2)
     print("Input:\n", test_input)
-    print("Solution:\n", checksum_puzzle_1(test_input))
+    print("Solution 1:\n", checksum_puzzle_1(test_input))
+    print("Solution 1:\n", checksum_puzzle_2(test_input))
+
 
 if __name__ == '__main__':
     main()
