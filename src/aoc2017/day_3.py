@@ -3,6 +3,8 @@
 
 import click
 import numpy as np
+from itertools import count
+
 
 from .download_input import get_input
 
@@ -56,7 +58,7 @@ def spiral_memory_steps_2(data):
 
     neighbors = np.concatenate([moves, np.array([[1, 1], [1, -1], [-1, -1], [-1, 1]])])
 
-    for loc in range(0, data):
+    for loc in count(start=0, step=1):
         if loc <= 2:
             used_indicies_with_values[first_indices[loc]] = first_values[loc]
             indicies[loc, :] = first_indices[loc]
