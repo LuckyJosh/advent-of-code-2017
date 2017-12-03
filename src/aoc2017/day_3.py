@@ -6,7 +6,7 @@ import numpy as np
 from .download_input import get_input
 
 
-def spiral_memory_steps(data_location):
+def spiral_memory_steps_1(data_location):
     pass
 
 
