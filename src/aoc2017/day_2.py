@@ -27,7 +27,7 @@ def checksum_puzzle_2(spreadsheet):
 
     devision = sheet[:, :, np.newaxis]/sheet[:, np.newaxis, :]
     result_is_int = devision.astype(int) == devision
-    row_results = devision[result_is_int & (devision != 1)]
+    row_results = devision[result_is_int & (devision != 1)].astype(int)
     return np.sum(row_results)
 
 @click.command()
