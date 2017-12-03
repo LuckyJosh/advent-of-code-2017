@@ -32,6 +32,9 @@ def checksum_puzzle_2(spreadsheet):
     spreadsheet = BytesIO(bytes(spreadsheet, encoding="utf8"))
     sheet = np.genfromtxt(spreadsheet, delimiter="\t", dtype=int)
 
+    # This divides every value in each row by every value in the same row
+    # Starting with a (3,4) array (example) one gets a (4,4) for each row which
+    # results in a (3,4,4) array.
     devision = sheet[:, :, np.newaxis]/sheet[:, np.newaxis, :]
     result_is_int = devision.astype(int) == devision
     row_results = devision[result_is_int & (devision != 1)].astype(int)
