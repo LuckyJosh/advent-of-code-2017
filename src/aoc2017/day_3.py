@@ -93,7 +93,8 @@ def spiral_memory_steps_2(data):
 def main():
     input_ = get_input(3)
     print("Input:\n", input_)
-    print("Output:", spiral_memory_steps_1(input_))
+    print("Output 1:", spiral_memory_steps_1(input_))
+    print("Output 2:", spiral_memory_steps_2(input_))
 
 
 
