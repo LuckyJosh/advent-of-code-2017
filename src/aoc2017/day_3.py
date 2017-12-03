@@ -16,7 +16,7 @@ def spiral_memory_steps_1(data_location):
                          "but number given is {data_location}.")
     used_indicies = set()
 
-    indicies = np.zeros(shape=(data_location, 2))
+    indicies = np.zeros(shape=(data_location, 2), dtype=int)
 
     first_indices = [(0, 0), (1, 0), (1, 1)]
 
@@ -32,7 +32,6 @@ def spiral_memory_steps_1(data_location):
             not_used = [tuple(idx) not in used_indicies for idx in new_indicies]
             distance_to_center = np.linalg.norm(indicies[0, :] - new_indicies[not_used], axis=1)
             min_distance = np.argmin(distance_to_center)
-
             used_indicies.add(tuple(new_indicies[min_distance]))
             indicies[loc, :] = new_indicies[min_distance]
 
