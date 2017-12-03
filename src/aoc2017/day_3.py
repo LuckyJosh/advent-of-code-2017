@@ -49,10 +49,8 @@ def spiral_memory_steps_2(data):
 
     used_indicies_with_values = {}
 
-    # @hack: There has to be a better way to do this!
-    additional_shape = [2, 2, 1, 1, 1]
     if data <= 5:
-        shape = data + additional_shape[data-1]
+        shape = 6
     else:
         shape = data
 
@@ -85,8 +83,8 @@ def spiral_memory_steps_2(data):
             used_indicies_with_values[tuple(new_index)] = sum(values_of_neighbors)
             indicies[loc, :] = new_indicies[not_used][min_distance]
 
-        if used_indicies_with_values[tuple(indicies[-1, :])] > data:
-            return used_indicies_with_values[tuple(indicies[-1, :])]
+        if used_indicies_with_values[tuple(indicies[loc, :])] > data:
+            return used_indicies_with_values[tuple(indicies[loc, :])]
 
 
 
