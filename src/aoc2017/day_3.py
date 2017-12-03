@@ -76,8 +76,8 @@ def spiral_memory_steps_2(data):
             used_indicies_with_values[tuple(new_index)] = sum(values_of_neighbors)
             indicies[loc, :] = new_indicies[not_used][min_distance]
 
-        if used_indicies_with_values[tuple(new_index)] > data:
-            return used_indicies_with_values[tuple(new_index)]
+        if used_indicies_with_values[tuple(indicies[-1, :])] > data:
+            return used_indicies_with_values[tuple(indicies[-1, :])]
 
 
 
