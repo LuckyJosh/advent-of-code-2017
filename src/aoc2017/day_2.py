@@ -4,6 +4,7 @@
 import click
 import numpy as np
 import numpy.ma as ma
+from io import BytesIO
 
 from .download_input import get_input
 
@@ -20,6 +21,14 @@ def checksum_puzzle_1(spreadsheet):
     return checksum
 
 
+def checksum_puzzle_2(spreadsheet):
+    spreadsheet = BytesIO(bytes(spreadsheet, encoding="utf8"))
+    sheet = np.genfromtxt(spreadsheet, delimiter="\t", dtype=int)
+
+    devision = sheet[:, :, np.newaxis]/sheet[:, np.newaxis, :]
+    result_is_int = devision.astype(int) == devision
+    row_results = devision[result_is_int & (devision != 1)]
+    return np.sum(row_results)
 
 @click.command()
 def main():
