@@ -3,11 +3,14 @@
 
 import click
 import numpy as np
+from io import BytesIO
 
 from .download_input import get_input
 
 def checksum_puzzle_1(spreadsheet):
-    pass
+    spreadsheet = BytesIO(bytes(spreadsheet))
+    sheet = np.genfromtxt(spreadsheet, dtype=int, delimiter="\\t", comments='#')
+    print(sheet)
 
 
 @click.command()
