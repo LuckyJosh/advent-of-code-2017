@@ -23,4 +23,3 @@ def cli_entry_point():
 cli_entry_point.add_command(day_1.main, name="day-1")
 cli_entry_point.add_command(day_2.main, name="day-2")
 cli_entry_point.add_command(day_3.main, name="day-3")
-
