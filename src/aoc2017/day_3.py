@@ -43,7 +43,7 @@ def spiral_memory_steps_1(data_location):
 def main():
     input_ = get_input(3)
     print("Input:\n", input_)
-    print("Output:", spiral_memory_steps_1(9))
+    print("Output:", spiral_memory_steps_1(input_))
 
 
 if __name__ == '__main__':
