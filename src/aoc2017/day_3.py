@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
+import click
 import numpy as np
 
 from .download_input import get_input
@@ -40,8 +41,7 @@ def spiral_memory_steps_1(data_location):
     return num_steps
 
 
-
-
+@click.command()
 def main():
     input_ = get_input(3)
     print("Input:\n", input_)
