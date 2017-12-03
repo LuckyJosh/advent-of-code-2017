@@ -5,6 +5,7 @@ import numpy as np
 
 from .download_input import get_input
 
+
 # @refactor: Both solution functions could be easily put into one
 def solve_captcha_puzzle_1(captcha):
     # @documentation: All or parts of the documentation is missing!
