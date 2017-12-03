@@ -49,7 +49,12 @@ def spiral_memory_steps_2(data):
 
     used_indicies_with_values = {}
 
-    indicies = np.zeros(shape=(data, 2), dtype=int)
+    if data < 5:
+        shape = 5
+    else:
+        shape = data
+
+    indicies = np.zeros(shape=(shape, 2), dtype=int)
 
     first_indices = [(0, 0), (1, 0), (1, 1)]
     first_values = [1, 1, 2]
