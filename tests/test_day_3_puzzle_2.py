@@ -34,6 +34,30 @@ def test_spiral_memory_steps_2_5():
 
 
 def test_spiral_memory_steps_2_6():
+    input_ = "9"
+    output = 10
+    assert spiral_memory_steps_2(input_) == output
+
+
+def test_spiral_memory_steps_2_7():
+    input_ = "10"
+    output = 11
+    assert spiral_memory_steps_2(input_) == output
+
+
+def test_spiral_memory_steps_2_8():
     input_ = "11"
     output = 23
+    assert spiral_memory_steps_2(input_) == output
+
+
+def test_spiral_memory_steps_2_9():
+    input_ = "26"
+    output = 54
+    assert spiral_memory_steps_2(input_) == output
+
+
+def test_spiral_memory_steps_2_10():
+    input_ = "59"
+    output = 122
     assert spiral_memory_steps_2(input_) == output
