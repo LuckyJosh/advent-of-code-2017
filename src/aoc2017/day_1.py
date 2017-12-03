@@ -5,6 +5,7 @@ import numpy as np
 
 from .download_input import get_input
 
+
 def solve_captcha_puzzle_1(captcha):
     # @documentation: All or parts of the documentation is missing!
     if isinstance(captcha, str):
@@ -15,6 +16,7 @@ def solve_captcha_puzzle_1(captcha):
     mask = cap == np.roll(cap, 1)
     selection = cap[mask]
     return np.sum(selection)
+
 
 def solve_captcha_puzzle_2(captcha):
     # @documentation: All or parts of the documentation is missing!
