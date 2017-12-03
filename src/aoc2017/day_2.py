@@ -9,6 +9,11 @@ from io import BytesIO
 from .download_input import get_input
 
 def checksum_puzzle_1(spreadsheet):
+    # @documentation: All or parts of the documentation is missing!
+    # The example had a row that was shorter than the other ones
+    # this is the workaround for that. The way of reading in the
+    # input shown in the solution to the second puzzle would have
+    # sufficed for the given test (puzzle) input.
     line_split = spreadsheet.split("\n")
     column_split = [line.split("\t") for line in line_split]
     max_line_length = max([len(line) for line in column_split])
@@ -22,6 +27,7 @@ def checksum_puzzle_1(spreadsheet):
 
 
 def checksum_puzzle_2(spreadsheet):
+    # @documentation: All or parts of the documentation is missing!
     spreadsheet = BytesIO(bytes(spreadsheet, encoding="utf8"))
     sheet = np.genfromtxt(spreadsheet, delimiter="\t", dtype=int)
 
