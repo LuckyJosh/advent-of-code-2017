@@ -9,6 +9,7 @@ from itertools import count
 from .download_input import get_input
 
 
+# @performance: This function seems to be quite slow, may be worth profiling it
 def spiral_memory_steps_1(data_location):
     # @documentation: All or parts of the documentation is missing!
     data_location = int(data_location)
@@ -43,6 +44,7 @@ def spiral_memory_steps_1(data_location):
 
 
 def spiral_memory_steps_2(data):
+    # @documentation: All or parts of the documentation is missing!
     data = int(data)
 
     # internally to this function, data location start at 0 not at 1!
