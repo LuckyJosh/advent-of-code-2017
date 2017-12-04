@@ -8,8 +8,23 @@ from .download_input import get_input
 
 
 def check_passphrase_1(passphrases):
-    pass
+    # @documentation: All or parts of the documentation is missing!
 
+    passphrases = passphrases.split("\n")
+    passphrases = [phrase.split(" ") for phrase in passphrases]
+
+    results = []
+    for passphrase in passphrases:
+        for i, word1 in enumerate(passphrase):
+            for j, word2 in enumerate(passphrase):
+                if (i != j) and (word1 == word2):
+                    results.append(False)
+                    break
+            if not results[-1]:
+                break
+
+
+    return results
 
 def func_2(arg):
     pass
