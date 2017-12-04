@@ -13,14 +13,14 @@ def check_passphrase_1(passphrases):
     passphrases = passphrases.split("\n")
     passphrases = [phrase.split(" ") for phrase in passphrases]
 
-    results = []
-    for passphrase in passphrases:
-        for i, word1 in enumerate(passphrase):
-            for j, word2 in enumerate(passphrase):
-                if (i != j) and (word1 == word2):
-                    results.append(False)
+    results = [True] * len(passphrases)
+    for i, passphrase in passphrases:
+        for j, word1 in enumerate(passphrase):
+            for k, word2 in enumerate(passphrase):
+                if (j != k) and (word1 == word2):
+                    results[i] = False
                     break
-            if not results[-1]:
+            if not results[i]:
                 break
 
 
