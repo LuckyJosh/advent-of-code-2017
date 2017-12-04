@@ -26,15 +26,30 @@ def check_passphrase_1(passphrases):
     return sum(results)
 
 
-def func_2(arg):
-    pass
+def check_passphrase_2(passphrases):
+    # @documentation: All or parts of the documentation is missing!
+
+    passphrases = passphrases.split("\n")
+    passphrases = [phrase.split(" ") for phrase in passphrases]
+
+    results = [True] * len(passphrases)
+    for i, passphrase in enumerate(passphrases):
+        for j, word1 in enumerate(passphrase):
+            for k, word2 in enumerate(passphrase):
+                if (j != k) and (sorted(word1) == sorted(word2)):
+                    results[i] = False
+                    break
+            if not results[i]:
+                break
+
+    return sum(results)
 
 @click.command()
 def main():
     input_ = get_input(4)
     print("Input:\n", input_)
     print("Output", check_passphrase_1(input_))
-    print("Output", func_2(input_))
+    print("Output", check_passphrase_2(input_))
 
 
 if __name__ == '__main__':
