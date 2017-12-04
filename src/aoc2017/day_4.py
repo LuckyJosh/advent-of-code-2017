@@ -14,7 +14,7 @@ def check_passphrase_1(passphrases):
     passphrases = [phrase.split(" ") for phrase in passphrases]
 
     results = [True] * len(passphrases)
-    for i, passphrase in passphrases:
+    for i, passphrase in enumerate(passphrases):
         for j, word1 in enumerate(passphrase):
             for k, word2 in enumerate(passphrase):
                 if (j != k) and (word1 == word2):
