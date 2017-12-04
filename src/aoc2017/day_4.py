@@ -23,8 +23,8 @@ def check_passphrase_1(passphrases):
             if not results[i]:
                 break
 
-
     return results
+
 
 def func_2(arg):
     pass
