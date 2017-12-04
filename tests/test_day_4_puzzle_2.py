@@ -36,5 +36,5 @@ def test_check_passphrase_2_5():
 
 def test_check_passphrase_2_6():
     input_ = "abcde fghij\nabcde xyz ecdab\na ab abc abd abf abj\niiii oiii ooii oooi oooo\noiii ioii iioi iiio"
-    output = None
+    output = 3
     assert check_passphrase_2(input_) == output
