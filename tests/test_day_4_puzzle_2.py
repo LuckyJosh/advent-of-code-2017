@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # encoding: utf-8
 
-from aoc2017.day_ import func_2
+from aoc2017.day_4 import func_2
 
 
 def test_func_2_():
