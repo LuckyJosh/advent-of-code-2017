@@ -23,6 +23,6 @@ def test_check_passphrase_1_3():
 
 
 def test_check_passphrase_1_4():
-    input_ = '"aa bb cc dd ee"\n"aa bb cc dd aa"\n"aa bb cc dd aaa"'
+    input_ = "aa bb cc dd ee\naa bb cc dd aa\naa bb cc dd aaa"
     output = [True, False, True]
     assert check_passphrase_1(input_) == output
