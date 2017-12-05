@@ -22,15 +22,30 @@ def memory_jumps_1(jumps):
 
     return counter
 
-def func_2(arg):
-    pass
+def memory_jumps_2(jumps):
+    # @documentation: All or parts of the documentation is missing!
+    jumps = [int(jump) for jump in jumps.split("\n")]
+
+    njumps = len(jumps)
+    i = 0
+    counter = 0
+    while i < njumps:
+        next_i = i + jumps[i]
+        if jumps[i] >= 3:
+            jumps[i] -= 1
+        else:
+            jumps[i] += 1
+        i = next_i
+        counter += 1
+
+    return counter
 
 @click.command()
 def main():
     input_ = get_input(5)
     print("Input:\n", input_)
     print("Output", memory_jumps_1(input_))
-    print("Output", func_2(input_))
+    print("Output", memory_jumps_2(input_))
 
 
 if __name__ == '__main__':
