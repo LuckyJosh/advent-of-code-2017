@@ -16,7 +16,7 @@ def func_2(arg):
 
 @click.command()
 def main():
-    input_ = get_input()
+    input_ = get_input(5)
     print("Input:\n", input_)
     print("Output", memory_jumps_1(input_))
     print("Output", func_2(input_))
