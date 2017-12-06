@@ -33,7 +33,7 @@ def infinit_loop_2(arg):
 
 @click.command()
 def main():
-    input_ = get_input()
+    input_ = get_input(6)
     print("Input:\n", input_)
     print("Output", infinit_loop_1(input_))
     print("Output", infinit_loop_2(input_))
