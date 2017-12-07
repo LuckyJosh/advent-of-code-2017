@@ -37,7 +37,7 @@ def towers_1(program_info):
             return prog.name
 
 
-# @hack:  This is horrible but I could not muster the strength to do it nice
+# @hack:  This is horrible but I can not muster the strength to do it nice today
 def towers_2(program_info):
     programs = program_info.split("\n")
     parsed_programs = []
@@ -91,7 +91,6 @@ def towers_2(program_info):
         child_weights = set(sub_tree_weights[child] for child in prog.child_nodes)
         node_balanced[prog.name] = len(child_weights) < 2
 
-
     def get_heavy_node(root):
         root = name_nodes[root]
         if node_balanced[root.name]:
@@ -101,7 +100,6 @@ def towers_2(program_info):
             idx = sorted(child_sub_tree_weights, key=lambda x: x[1], reverse=True)[0][0]
             node = get_heavy_node(root.child_nodes[idx])
             return node
-
 
     heavy_node = get_heavy_node(root_prog_name)
 
