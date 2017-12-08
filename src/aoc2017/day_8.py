@@ -22,7 +22,6 @@ def register_1(instructions):
     operations = {"dec": operator.sub, "inc": operator.add}
     for inst in instructions:
         query = f"{registers[inst.condition_register]}{inst.condition_operator}{inst.condition_value}"
-        print(query, eval(query))
         if eval(query):
             registers[inst.register] = operations[inst.operation](registers[inst.register], int(inst.value))
 
@@ -34,8 +33,8 @@ def register_2(arg):
 
 @click.command()
 def main():
-    #input_ = get_input(8)
-    input_ = "b inc 5 if a > 1\na inc 1 if b < 5\nc dec -10 if a >= 1\nc inc -20 if c == 10"
+    input_ = get_input(8)
+    #input_ = "b inc 5 if a > 1\na inc 1 if b < 5\nc dec -10 if a >= 1\nc inc -20 if c == 10"
     print("Input:\n", input_)
     print("Output", register_1(input_))
     print("Output", register_2(input_))
