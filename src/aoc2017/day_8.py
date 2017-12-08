@@ -3,12 +3,30 @@
 
 import click
 import numpy as np
+from collections import namedtuple
+from collections import defaultdict
+import operator
 
 from .download_input import get_input
 
 
-def register_1(arg):
-    pass
+Instruction = namedtuple("instruction",
+                         ["register", "operation", "value", "condition_start",
+                          "condition_register", "condition_operator", "condition_value"])
+
+
+def register_1(instructions):
+    instructions = instructions.split("\n")
+    instructions = [Instruction(*instruction.split(" ")) for instruction in instructions]
+    registers = defaultdict(int)
+    operations = {"dec": operator.sub, "inc": operator.add}
+    for inst in instructions:
+        query = f"{registers[inst.condition_register]}{inst.condition_operator}{inst.condition_value}"
+        print(query, eval(query))
+        if eval(query):
+            registers[inst.register] = operations[inst.operation](registers[inst.register], int(inst.value))
+
+    return max(registers.values())
 
 
 def register_2(arg):
