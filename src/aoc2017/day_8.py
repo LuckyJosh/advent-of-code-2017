@@ -28,8 +28,20 @@ def register_1(instructions):
     return max(registers.values())
 
 
-def register_2(arg):
-    pass
+def register_2(instructions):
+    instructions = instructions.split("\n")
+    instructions = [Instruction(*instruction.split(" ")) for instruction in instructions]
+    registers = defaultdict(int)
+    operations = {"dec": operator.sub, "inc": operator.add}
+    highest_register_value = 0
+    for inst in instructions:
+        query = f"{registers[inst.condition_register]}{inst.condition_operator}{inst.condition_value}"
+        if eval(query):
+            registers[inst.register] = operations[inst.operation](registers[inst.register], int(inst.value))
+            highest_register_value = max(registers[inst.register], highest_register_value)
+
+    return highest_register_value
+
 
 @click.command()
 def main():
