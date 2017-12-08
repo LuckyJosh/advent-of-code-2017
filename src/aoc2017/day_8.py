@@ -7,19 +7,19 @@ import numpy as np
 from .download_input import get_input
 
 
-def func_1(arg):
+def register_1(arg):
     pass
 
 
-def func_2(arg):
+def register_2(arg):
     pass
 
 @click.command()
 def main():
-    #input_ = get_input(8)
+    input_ = get_input(8)
     print("Input:\n", input_)
-    print("Output", func_1(input_))
-    print("Output", func_2(input_))
+    print("Output", register_1(input_))
+    print("Output", register_2(input_))
 
 
 if __name__ == '__main__':
