@@ -77,8 +77,8 @@ def stream_2(stream):
 @click.command()
 def main():
     #input_ = "{{{}}}"
-    input_ = "{<random characters>}"
-    #input_ = get_input(9)
+    #input_ = "{<random characters>}"
+    input_ = get_input(9)
     print("Input:\n", input_)
     print("Output", stream_1(input_))
     print("Output", stream_2(input_))
