@@ -7,8 +7,14 @@ import numpy as np
 from .download_input import get_input
 
 
-def knot_hash_1(arg):
-    pass
+def knot_hash_1(lengths, list_length=256):
+    lengths = lengths.split(",")
+    lengths = np.array(lengths, dtype=int)
+    List = np.arange(0, list_length)
+    skip_sizes = np.arange(0, lengths + 1)
+
+    return lengths
+
 
 
 def knot_hash_2(arg):
@@ -16,7 +22,8 @@ def knot_hash_2(arg):
 
 @click.command()
 def main():
-    input_ = get_input(10)
+    #input_ = get_input(10)
+    input_ = "3,4,1,5"
     print("Input:\n", input_)
     print("Output", knot_hash_1(input_))
     print("Output", knot_hash_2(input_))
