@@ -41,6 +41,8 @@ def knot_hash_1(lengths, list_length=256):
 
 
 def knot_hash_2(arg):
+    # dtype=np.int8
+    # array.data.hex() -> two digit hexvalue
     pass
 
 @click.command()
