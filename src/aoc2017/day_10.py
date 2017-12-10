@@ -48,7 +48,7 @@ def knot_hash_2(lengths, list_length=256):
     lengths = np.array(lengths, dtype=int)
     repeated_lengths = np.tile(lengths, 64)
 
-    List = np.arange(0, list_length, dtype=np.uint8)
+    List = np.arange(0, list_length)
 
     skip_sizes = np.arange(0, len(repeated_lengths + 1))
     jumps = (repeated_lengths + skip_sizes) % list_length
