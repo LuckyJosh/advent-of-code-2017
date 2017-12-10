@@ -45,10 +45,10 @@ def knot_hash_2(arg):
 
 @click.command()
 def main():
-    #input_ = get_input(10)
-    input_ = "3,4,1,5"
+    input_ = get_input(10)
+    #input_ = "3,4,1,5"
     print("Input:\n", input_)
-    print("Output", knot_hash_1(input_, list_length=5))
+    print("Output", knot_hash_1(input_))
     print("Output", knot_hash_2(input_))
 
 
