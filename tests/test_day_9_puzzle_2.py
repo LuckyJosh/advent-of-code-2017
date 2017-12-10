@@ -36,11 +36,11 @@ def test_stream_2_5():
 
 def test_stream_2_6():
     input_ = "<!!!>>"
-    output = None
+    output = 0
     assert stream_2(input_) == output
 
 
 def test_stream_2_7():
-    input_ = "<{o"i!a,<{i<a>"
+    input_ = '<{o"i!a,<{i<a>'
     output = 10
     assert stream_2(input_) == output
