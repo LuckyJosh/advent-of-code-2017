@@ -5,6 +5,6 @@ from aoc2017.day_10 import knot_hash_1
 
 
 def test_knot_hash_1_1():
-    input_ = ""
+    input_ = "3,4,1,5"
     output = 12
-    assert knot_hash_1(input_) == output
+    assert knot_hash_1(input_, length=5) == output
