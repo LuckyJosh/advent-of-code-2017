@@ -46,13 +46,39 @@ def stream_1(stream):
     return sum(score_by_group.values())
 
 
-def stream_2(arg):
-    pass
+def stream_2(stream):
+    in_garbage = False
+    after_bang = False
+    groups = []
+    current_group = []
+    garbage_count = 0
+    for i, char in enumerate(stream):
+        if after_bang:
+            after_bang = False
+            continue
+        elif char == "!":
+            after_bang = True
+        elif char == "<":
+            if in_garbage:
+                garbage_count += 1
+            in_garbage = True
+        elif char == ">":
+            in_garbage = False
+        elif (not in_garbage) and (char == "{"):
+            groups.append([i, 0])
+            current_group.append(len(groups) - 1)
+        elif (not in_garbage) and (char == "}"):
+            groups[current_group.pop()][1] = i
+        if in_garbage and not char in ["!", "<"]:
+            garbage_count += 1
+
+    return garbage_count
 
 @click.command()
 def main():
     #input_ = "{{{}}}"
-    input_ = get_input(9)
+    input_ = "{<random characters>}"
+    #input_ = get_input(9)
     print("Input:\n", input_)
     print("Output", stream_1(input_))
     print("Output", stream_2(input_))
