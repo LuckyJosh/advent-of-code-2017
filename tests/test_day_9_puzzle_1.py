@@ -52,13 +52,13 @@ def test_stream_1_8():
     assert stream_1(input_) == output
 
 
-def test_stream_1_8():
+def test_stream_1_9():
     input_ = "{{<a!>},{<a!>},\n{<a!>},{<ab>}}"
     output = 3
     assert stream_1(input_) == output
 
 
-def test_stream_1_9():
+def test_stream_1_10():
     input_ = "{{},\n{}}"
     output = 5
     assert stream_1(input_) == output
