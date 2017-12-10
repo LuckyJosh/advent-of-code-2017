@@ -11,10 +11,9 @@ def knot_hash_1(lengths, list_length=256):
     lengths = lengths.split(",")
     lengths = np.array(lengths, dtype=int)
     List = np.arange(0, list_length)
-    skip_sizes = np.arange(0, lengths + 1)
+    skip_sizes = np.arange(0, len(lengths + 1))
 
     return lengths
-
 
 
 def knot_hash_2(arg):
