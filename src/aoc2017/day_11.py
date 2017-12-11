@@ -12,10 +12,18 @@ def hexgrid_1(movements):
                        "s": 3, "se": 4, "sw": 5}
     movements = [direction_indices[move] for move in movements.split(",")]
 
-    directions = np.array([(1, 0), (1, 1), (1, -1),
-                           (-1, 0), (-1, 1), (-1, -1)])
+    directions = np.array([(1, 0), (0, 1), (1, -1),
+                           (-1, 0), (-1, 1), (0, -1)])
 
-    return directions[movements]
+    sum_of_directions = np.sum(directions[movements], axis=0)
+    max_dir = np.abs(sum_of_directions).max()
+    min_dir = np.abs(sum_of_directions).min()
+    if max_dir == min_dir:
+        steps = max_dir
+    else:
+        steps = max_dir + min_dir
+
+    return steps
 
 
 def hexgrid_2(movements):
@@ -23,8 +31,7 @@ def hexgrid_2(movements):
 
 @click.command()
 def main():
-    #input_ = get_input(11)
-    input_ = "ne,ne,ne"
+    input_ = get_input(11)
     print("Input:\n", repr(input_))
     print("Output", hexgrid_1(input_))
     print("Output", hexgrid_2(input_))
