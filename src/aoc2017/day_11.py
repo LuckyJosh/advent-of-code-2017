@@ -46,8 +46,8 @@ def hexgrid_2(movements):
 
 @click.command()
 def main():
-    #input_ = get_input(11)
-    input_ = "ne,ne,ne"
+    input_ = get_input(11)
+    #input_ = "ne,ne,ne"
     print("Input:\n", repr(input_))
     print("Output", hexgrid_1(input_))
     print("Output", hexgrid_2(input_))
