@@ -12,13 +12,8 @@ def hexgrid_1(movements):
                        "s": 3, "se": 4, "sw": 5}
     movements = [direction_indices[move] for move in movements.split(",")]
 
-    directions = np.array([(0, 1, 0, 0),
-                           (0, 1, 0, 1),
-                           (0, 1, 1, 0),
-                           (1, 0, 0, 0),
-                           (1, 0, 0, 1),
-                           (1, 0, 1, 0)])
-
+    directions = np.array([(1, 0), (1, 1), (1, -1),
+                           (-1, 0), (-1, 1), (-1, -1)])
 
     return directions[movements]
 
