@@ -40,7 +40,7 @@ def hexgrid_2(movements):
 
     neighbor_signs_equal = signs[:, 0:-1] == signs[:, 1:]
 
-    steps[~neighbor_signs_equal.flatten()] += np.abs(sum_of_directions).min(axis=1)
+    steps[~neighbor_signs_equal.flatten()] += np.abs(sum_of_directions).min(axis=1)[~neighbor_signs_equal.flatten()]
 
     return np.max(steps)
 
