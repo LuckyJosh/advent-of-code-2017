@@ -25,8 +25,24 @@ def hexgrid_2(movements):
 
 
 def hexgrid_2(movements):
-    pass
+    direction_indices = {"n": 0, "ne": 1, "nw": 2,
+                       "s": 3, "se": 4, "sw": 5}
+    movements = [direction_indices[move] for move in movements.split(",")]
 
+    directions = np.array([(1, 0), (0, 1), (1, -1),
+                           (-1, 0), (-1, 1), (0, -1)])
+
+    sum_of_directions = np.cumsum(directions[movements], axis=0)
+
+    steps = np.abs(np.sum(sum_of_directions, axis=1))
+
+    signs = np.sign(sum_of_directions)
+
+    neighbor_signs_equal = signs[:, 0:-1] == signs[:, 1:]
+
+    steps[~neighbor_signs_equal.flatten()] += np.abs(sum_of_directions).min(axis=1)
+
+    return np.max(steps)
 
 @click.command()
 def main():
