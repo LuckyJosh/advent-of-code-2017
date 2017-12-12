@@ -73,9 +73,8 @@ def graph_2(graph_list):
                               for vertex, color in graph_colors.items()
                               if color == 2]
 
-        print(verticies_in_group, set(verticies_in_group))
         remaining_verticies -= set(verticies_in_group)
-        print(remaining_verticies)
+
         number_of_groups += 1
 
     return number_of_groups
