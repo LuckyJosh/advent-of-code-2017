@@ -16,7 +16,8 @@ def firewall_2(arg):
 
 @click.command()
 def main():
-    input_ = get_input(13)
+    #input_ = get_input(13)
+    input_ = "0: 3\n1: 2\n4: 4\n6: 4"
     print("Input:\n", input_)
     print("Output", firewall_1(input_))
     print("Output", firewall_2(input_))
