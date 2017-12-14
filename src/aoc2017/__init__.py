@@ -17,6 +17,7 @@ from . import day_10
 from . import day_11
 from . import day_12
 from . import day_13
+from . import day_14
 
 click_completion.init()
 click_completion.install(shell="fish", prog_name="aoc-2017")
@@ -43,3 +44,4 @@ cli_entry_point.add_command(day_10.main, name="day-10")
 cli_entry_point.add_command(day_11.main, name="day-11")
 cli_entry_point.add_command(day_12.main, name="day-12")
 cli_entry_point.add_command(day_13.main, name="day-13")
+cli_entry_point.add_command(day_14.main, name="day-14")
