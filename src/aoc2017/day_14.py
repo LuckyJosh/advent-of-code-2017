@@ -5,12 +5,13 @@ import click
 import numpy as np
 
 from .download_input import get_input
-from day_10 import knot_hash_2
+from .day_10 import knot_hash_2
 
 
 def hash_grid_1(key):
     row_keys = [key + "-" + str(i) for i in range(128)]
     row_hashes = [knot_hash_2(row_key) for row_key in row_keys]
+
 
     return row_hashes
 
