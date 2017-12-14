@@ -9,7 +9,7 @@ from .download_input import get_input
 
 def firewall_1(depth_range):
 
-    depth_range = {int(line[0]): int(line[-1])
+    depth_range = {int(line.split()[0]): int(line.split()[-1])
                    for line in depth_range.replace(":", "").split("\n")}
 
     depth_range_ = []
@@ -28,7 +28,7 @@ def firewall_1(depth_range):
     def pyramid_range(max_num, num_repeats=0, cutoff=None):
         num_elements = max_num + max_num - 1
         if num_repeats == 0 and cutoff is not None:
-            num_repeats = cutoff//num_elements
+            num_repeats = cutoff//(num_elements - 1)
 
         pyramid_range = np.full(num_elements, max_num - 1)
         indicies = np.arange(max_num - 1)
@@ -69,8 +69,8 @@ def firewall_2(arg):
 
 @click.command()
 def main():
-    #input_ = get_input(13)
-    input_ = "0: 3\n1: 2\n4: 4\n6: 4"
+    input_ = get_input(13)
+    #input_ = "0: 3\n1: 2\n4: 4\n6: 4"
     print("Input:\n", input_)
     print("Output", firewall_1(input_))
     print("Output", firewall_2(input_))
