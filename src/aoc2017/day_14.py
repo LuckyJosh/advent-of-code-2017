@@ -91,6 +91,14 @@ def hash_grid_2(key):
 
     cluster_list = [key for key, value in cluster.items() if value >= 0]
 
+    cluster_ = cluster.copy()
+    for key, value in cluster_.items():
+        if value < 0:
+            root = find_root_cluster(-1*value, cluster)
+            cluster_grid[cluster_grid == key] = root
+
+    print(cluster_grid[:15, :15])
+
     return len(cluster_list)
 
 
