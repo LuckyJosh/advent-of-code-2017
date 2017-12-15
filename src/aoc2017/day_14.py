@@ -3,6 +3,7 @@
 
 import click
 import numpy as np
+from collections import defaultdict
 
 from .download_input import get_input
 from .day_10 import knot_hash_2
@@ -41,20 +42,58 @@ def hash_grid_2(key):
             bin_row_hash.append(bin_char)
         bin_row_hashes.append("".join(bin_row_hash))
 
-    bin_grid = np.array([list(row) for row in bin_row_hashes], dtype=int)
+    bin_grid = np.array([list(row) for row in bin_row_hashes], dtype=int).astype(bool)
+    cluster_grid = np.zeros_like(bin_grid, dtype=int)
 
-    def new_hoshen():
-        cluster = {}
-        def hoshen(x, y):
 
-            return
-        return hoshen
+    def find_root_cluster(cluster_value, cluster):
+        cluster_size = cluster[cluster_value]
+        if cluster_size < 0:
+            return find_root_cluster(-1*cluster_size, cluster)
+        else:
+            return cluster_value
 
-    hoshen = new_hoshen()
+    cluster = defaultdict(int)
+    current_cluster = 0
+    for i in range(128):
+        for j in range(128):
+            if bin_grid[i, j]:
+                cluster_above = ((i-1) >= 0) and bin_grid[i-1, j]
+                cluster_left = ((j-1) >= 0) and bin_grid[i, j-1]
 
-    cluster = np.fromfunction(hoshen, (128,128))
+                if cluster_above and cluster_left:
+                    cluster_value_above = cluster_grid[i-1, j]
+                    cluster_value_left = cluster_grid[i, j-1]
+                    cluster_grid[i, j] = cluster_value_above
 
-    return bin_grid
+                    cluster[find_root_cluster(cluster_value_above, cluster)] += 1
+
+                    if find_root_cluster(cluster_value_left, cluster) != find_root_cluster(cluster_value_above, cluster):
+                        cluster[find_root_cluster(cluster_value_above, cluster)] += cluster[find_root_cluster(cluster_value_left, cluster)]
+                        cluster[find_root_cluster(cluster_value_left, cluster)] = -1 * cluster_value_above
+
+
+                elif cluster_above:
+                    cluster_value = cluster_grid[i-1, j]
+                    cluster_grid[i, j] = cluster_value
+                    cluster[find_root_cluster(cluster_value, cluster)] += 1
+
+                elif cluster_left:
+                    cluster_value = cluster_grid[i, j-1]
+                    cluster_grid[i, j] = cluster_value
+                    cluster[find_root_cluster(cluster_value, cluster)] += 1
+
+                else:
+                    current_cluster += 1
+                    cluster_grid[i, j] = current_cluster
+                    cluster[current_cluster] += 1
+
+
+    cluster_list = [key for key, value in cluster.items() if value >= 0]
+
+    return len(cluster_list)
+
+
 
 @click.command()
 def main():
