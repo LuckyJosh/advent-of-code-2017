@@ -7,19 +7,19 @@ import numpy as np
 from .download_input import get_input
 
 
-def generator_1(arg):
+def generators_1(arg):
     pass
 
 
-def generator_2(arg):
+def generators_2(arg):
     pass
 
 @click.command()
 def main():
     input_ = get_input()
     print("Input:\n", input_)
-    print("Output", generator_1(input_))
-    print("Output", generator_2(input_))
+    print("Output", generators_1(input_))
+    print("Output", generators_2(input_))
 
 
 if __name__ == '__main__':
