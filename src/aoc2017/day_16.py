@@ -45,7 +45,7 @@ def permutations_1(instructions, num_programs=16):
     return "".join([chr(prog) for prog in program_positions + ascii_offset])
 
 
-def permutations_2(instructions):
+def permutations_2(instructions, num_programs=16):
     ascii_offset = ord("a")
     instructions = instructions.split(",")
 
