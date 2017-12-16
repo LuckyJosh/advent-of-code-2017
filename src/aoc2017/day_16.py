@@ -79,17 +79,35 @@ def permutations_2(instructions, num_programs=16):
 
         program_positions = possible_moves[inst[0]](program_positions, *inst[1])
 
-    prermutation_after_one_dance = program_positions[:]
 
-    for i in tqdm(range(1e9 - 1)):
-        program_positions = np.select(program_positions, prermutation_after_one_dance)
+    dances = int(1e9)
+    binary_dances = bin(dances)[2:]
+    num_bits_dances = len(binary_dances)
+    dances_mask = np.array([int(bit) for bit in binary_dances], dtype=bool)
+
+
+    permutations = np.zeros((num_bits_dances, num_programs), dtype=int)
+    permutations[0, :] = program_positions
+
+    for i in range(1, num_bits_dances):
+        permutations[i, :] = permutations[i - 1, :][permutations[i - 1, :]]
+
+    selected_permutations = permutations[dances_mask, :]
+
+    print(permutations)
+    print(dances_mask)
+    print(selected_permutations)
+
+    program_positions = np.arange(num_programs)
+    for permutation in selected_permutations:
+        program_positions = program_positions[permutation]
 
     return "".join([chr(prog) for prog in program_positions + ascii_offset])
 
 @click.command()
 def main():
     input_ = get_input(16)
-    #input_ = "s1,x3/4,pe/b"
+    #input_ = "s1,x3/4,pc/b"
     print("Input:\n", input_)
     print("Output", permutations_1(input_))
     print("Output", permutations_2(input_))
