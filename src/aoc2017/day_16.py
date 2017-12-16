@@ -75,34 +75,39 @@ def permutations_2(instructions, num_programs=16):
                       "p": partner,
                       "x": exchange}
 
-    def dance(program_positions, num_dances):
-        for i in tqdm(range(num_dances)):
-            for inst in parsed_instructions:
-                program_positions = possible_moves[inst[0]](program_positions, *inst[1])
-        return program_positions
+    for inst in parsed_instructions:
 
-    dances = 1000000000
+        program_positions = possible_moves[inst[0]](program_positions, *inst[1])
+
+
+    dances = int(1e9)
     binary_dances = bin(dances)[2:]
-    missing_bits = 32 - len(binary_dances)
-    binary_dances = "0" * missing_bits + binary_dances
-    print(bin(dances), len(binary_dances))
-
     num_bits_dances = len(binary_dances)
-    dances_mask = np.array([int(bit) for bit in binary_dances[::-1]], dtype=bool)
-
-    program_positions = dance(program_positions, dances)
+    dances_mask = np.array([int(bit) for bit in binary_dances], dtype=bool)
 
 
+    permutations = np.zeros((num_bits_dances, num_programs), dtype=int)
+    permutations[0, :] = program_positions
 
+    for i in range(1, num_bits_dances):
+        permutations[i, :] = permutations[i - 1, :][permutations[i - 1, :]]
 
+    selected_permutations = permutations[dances_mask, :]
 
+    print(permutations)
+    print(dances_mask)
+    print(selected_permutations)
+
+    program_positions = np.arange(num_programs)
+    for permutation in selected_permutations:
+        program_positions = program_positions[permutation]
 
     return "".join([chr(prog) for prog in program_positions + ascii_offset])
 
 @click.command()
 def main():
     input_ = get_input(16)
-    #input_ = "s1,x3/4,pe/b"
+    #input_ = "s1,x3/4,pc/b"
     print("Input:\n", input_)
     print("Output", permutations_1(input_))
     print("Output", permutations_2(input_))
