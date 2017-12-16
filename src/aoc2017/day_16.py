@@ -7,7 +7,7 @@ import numpy as np
 from .download_input import get_input
 
 
-def permutations_1(instructions):
+def permutations_1(instructions, num_programs=15):
     ascii_offset = ord("a")
     instructions = instructions.split(",")
 
@@ -19,14 +19,14 @@ def permutations_1(instructions):
         parsed_instructions.append((inst_type, inst_args))
 
     def exchange(positions, indicies, ind1, ind2):
-        positions[ind1], positions[ind2] = positions[ind2], positions[ind1]
-        indicies[ind1], indicies[ind2] = indicies[ind2], indicies[ind1]
+        positions[[ind1, ind2]] = positions[[ind2, ind1]]
+        indicies[[ind1, ind2]] = indicies[[ind2, ind1]]
         return positions, indicies
 
     def partner(positions, indicies, ind1, ind2):
         ind1, ind2 = indicies[ind1], indicies[ind2]
-        positions[ind1], positions[ind2] = positions[ind2], positions[ind1]
-        indicies[ind1], indicies[ind2] = indicies[ind2], indicies[ind1]
+        positions[[ind1, ind2]] = positions[[ind2, ind1]]
+        indicies[[ind1, ind2]] = indicies[[ind2, ind1]]
         return positions, indicies
 
     def spin(positions, indicies, steps):
@@ -34,8 +34,8 @@ def permutations_1(instructions):
         indicies = np.roll(indicies, -1*steps)
         return positions, indicies
 
-    program_positions = np.arange(15)
-    program_indicies = np.arange(15)
+    program_positions = np.arange(num_programs)
+    program_indicies = np.arange(num_programs)
 
 
 
@@ -44,6 +44,8 @@ def permutations_1(instructions):
                       "x": exchange}
 
     for inst in parsed_instructions:
+        print(inst[0])
+        print(inst[1])
         program_positions, program_indicies = possible_moves[inst[0]](program_positions,
                                                                       program_indicies, *inst[1])
         print(program_positions)
@@ -58,7 +60,7 @@ def main():
     #input_ = get_input(16)
     input_ = "s1,x3/4,pe/b"
     print("Input:\n", input_)
-    print("Output", permutations_1(input_))
+    print("Output", permutations_1(input_, num_programs=5))
     print("Output", permutations_2(input_))
 
 
