@@ -8,8 +8,15 @@ from .download_input import get_input
 
 
 def permutations_1(instructions):
-    pass
+    instructions = instructions.split(",")
 
+    parsed_instructions = []
+    for inst in instructions:
+        inst_type = inst[0]
+        inst_args = tuple([int(i) for i in inst[1:].split("/")])
+        parsed_instructions.append((inst_type, inst_args))
+
+    return  parsed_instructions
 
 def permutations_2(instructions):
     pass
