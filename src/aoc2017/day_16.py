@@ -8,15 +8,47 @@ from .download_input import get_input
 
 
 def permutations_1(instructions):
+    ascii_offset = ord("a")
     instructions = instructions.split(",")
 
     parsed_instructions = []
     for inst in instructions:
         inst_type = inst[0]
-        inst_args = tuple([int(i) for i in inst[1:].split("/")])
+        inst_args = tuple([int(i) if i.isdigit() else (ord(i) - ascii_offset)
+                           for i in inst[1:].split("/")])
         parsed_instructions.append((inst_type, inst_args))
 
-    return  parsed_instructions
+    def exchange(positions, indicies, ind1, ind2):
+        positions[ind1], positions[ind2] = positions[ind2], positions[ind1]
+        indicies[ind1], indicies[ind2] = indicies[ind2], indicies[ind1]
+        return positions, indicies
+
+    def partner(positions, indicies, ind1, ind2):
+        ind1, ind2 = indicies[ind1], indicies[ind2]
+        positions[ind1], positions[ind2] = positions[ind2], positions[ind1]
+        indicies[ind1], indicies[ind2] = indicies[ind2], indicies[ind1]
+        return positions, indicies
+
+    def spin(positions, indicies, steps):
+        positions = np.roll(positions, steps)
+        indicies = np.roll(indicies, -1*steps)
+        return positions, indicies
+
+    program_positions = np.arange(15)
+    program_indicies = np.arange(15)
+
+
+
+    possible_moves = {"s": spin,
+                      "p": partner,
+                      "x": exchange}
+
+    for inst in parsed_instructions:
+        program_positions, program_indicies = possible_moves[inst[0]](program_positions,
+                                                                      program_indicies, *inst[1])
+        print(program_positions)
+
+    return  program_positions
 
 def permutations_2(instructions):
     pass
