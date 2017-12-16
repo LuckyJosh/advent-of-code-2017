@@ -4,6 +4,7 @@
 import click
 import numpy as np
 
+from tqdm import tqdm
 from .download_input import get_input
 
 
@@ -45,7 +46,45 @@ def permutations_1(instructions, num_programs=16):
 
 
 def permutations_2(instructions):
-    pass
+    ascii_offset = ord("a")
+    instructions = instructions.split(",")
+
+    parsed_instructions = []
+    for inst in instructions:
+        inst_type = inst[0]
+        inst_args = tuple([int(i) if i.isdigit() else (ord(i) - ascii_offset)
+                           for i in inst[1:].split("/")])
+        parsed_instructions.append((inst_type, inst_args))
+
+    def exchange(positions, ind1, ind2):
+        positions[[ind1, ind2]] = positions[[ind2, ind1]]
+        return positions
+
+    def partner(positions, ind1, ind2):
+        ind1, ind2 = np.argwhere(positions == ind1)[0,0], np.argwhere(positions == ind2)[0,0]
+        positions[[ind1, ind2]] = positions[[ind2, ind1]]
+        return positions
+
+    def spin(positions, steps):
+        positions = np.roll(positions, steps)
+        return positions
+
+    program_positions = np.arange(num_programs)
+
+    possible_moves = {"s": spin,
+                      "p": partner,
+                      "x": exchange}
+
+    for inst in parsed_instructions:
+
+        program_positions = possible_moves[inst[0]](program_positions, *inst[1])
+
+    prermutation_after_one_dance = program_positions[:]
+
+    for i in tqdm(range(1e9 - 1)):
+        program_positions = np.select(program_positions, prermutation_after_one_dance)
+
+    return "".join([chr(prog) for prog in program_positions + ascii_offset])
 
 @click.command()
 def main():
