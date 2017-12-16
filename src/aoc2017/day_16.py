@@ -7,11 +7,11 @@ import numpy as np
 from .download_input import get_input
 
 
-def permutations_1(arg):
+def permutations_1(instructions):
     pass
 
 
-def permutations_2(arg):
+def permutations_2(instructions):
     pass
 
 @click.command()
