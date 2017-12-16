@@ -19,13 +19,14 @@ def permutations_1(instructions, num_programs=15):
         parsed_instructions.append((inst_type, inst_args))
 
     def exchange(positions, indicies, ind1, ind2):
+        ind1_, ind2_ = positions[[ind1, ind2]]
         positions[[ind1, ind2]] = positions[[ind2, ind1]]
-        indicies[[ind1, ind2]] = indicies[[ind2, ind1]]
+        indicies[[ind1_, ind2_]] = indicies[[ind2_, ind1_]]
         return positions, indicies
 
     def partner(positions, indicies, ind1, ind2):
-        ind1, ind2 = indicies[[ind1,ind2]]
-        positions[[ind1, ind2]] = positions[[ind2, ind1]]
+        ind1_, ind2_= indicies[[ind1, ind2]]
+        positions[[ind1_, ind2_]] = positions[[ind2_, ind1_]]
         indicies[[ind1, ind2]] = indicies[[ind2, ind1]]
         return positions, indicies
 
@@ -47,7 +48,7 @@ def permutations_1(instructions, num_programs=15):
 
         program_positions, program_indicies = possible_moves[inst[0]](program_positions,
                                                                       program_indicies, *inst[1])
-        print(inst[0], inst[1], program_positions)
+
 
     return  "".join([chr(prog) for prog in program_positions + ascii_offset])
 
