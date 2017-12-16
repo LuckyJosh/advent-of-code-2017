@@ -7,7 +7,7 @@ import numpy as np
 from .download_input import get_input
 
 
-def permutations_1(instructions, num_programs=15):
+def permutations_1(instructions, num_programs=16):
     ascii_offset = ord("a")
     instructions = instructions.split(",")
 
@@ -18,27 +18,20 @@ def permutations_1(instructions, num_programs=15):
                            for i in inst[1:].split("/")])
         parsed_instructions.append((inst_type, inst_args))
 
-    def exchange(positions, indicies, ind1, ind2):
-        ind1_, ind2_ = positions[[ind1, ind2]]
+    def exchange(positions, ind1, ind2):
         positions[[ind1, ind2]] = positions[[ind2, ind1]]
-        indicies[[ind1_, ind2_]] = indicies[[ind2_, ind1_]]
-        return positions, indicies
+        return positions
 
-    def partner(positions, indicies, ind1, ind2):
-        ind1_, ind2_= indicies[[ind1, ind2]]
-        positions[[ind1_, ind2_]] = positions[[ind2_, ind1_]]
-        indicies[[ind1, ind2]] = indicies[[ind2, ind1]]
-        return positions, indicies
+    def partner(positions, ind1, ind2):
+        ind1, ind2 = np.argwhere(positions == ind1)[0,0], np.argwhere(positions == ind2)[0,0]
+        positions[[ind1, ind2]] = positions[[ind2, ind1]]
+        return positions
 
-    def spin(positions, indicies, steps):
+    def spin(positions, steps):
         positions = np.roll(positions, steps)
-        indicies = np.roll(indicies, -1*steps)
-        return positions, indicies
+        return positions
 
     program_positions = np.arange(num_programs)
-    program_indicies = np.arange(num_programs)
-
-
 
     possible_moves = {"s": spin,
                       "p": partner,
@@ -46,21 +39,20 @@ def permutations_1(instructions, num_programs=15):
 
     for inst in parsed_instructions:
 
-        program_positions, program_indicies = possible_moves[inst[0]](program_positions,
-                                                                      program_indicies, *inst[1])
+        program_positions = possible_moves[inst[0]](program_positions, *inst[1])
 
+    return "".join([chr(prog) for prog in program_positions + ascii_offset])
 
-    return  "".join([chr(prog) for prog in program_positions + ascii_offset])
 
 def permutations_2(instructions):
     pass
 
 @click.command()
 def main():
-    #input_ = get_input(16)
-    input_ = "s1,x3/4,pe/b"
+    input_ = get_input(16)
+    #input_ = "s1,x3/4,pe/b"
     print("Input:\n", input_)
-    print("Output", permutations_1(input_, num_programs=5))
+    print("Output", permutations_1(input_))
     print("Output", permutations_2(input_))
 
 
