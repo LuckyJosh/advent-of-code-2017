@@ -31,7 +31,7 @@ def spinlock_2(num_steps):
     spinlock = [0]
     len_spinlock = np.arange(1, num_iterations + 1, dtype=int)
     current_position = np.zeros_like(len_spinlock)
-    for i in range(1, num_iterations):
+    for i in tqdm(range(1, num_iterations)):
         current_position[i] = (current_position[i-1] + num_steps) % len_spinlock[i-1] + 1
 
     pos_of_zero = np.sum(current_position[1:] == 0)
