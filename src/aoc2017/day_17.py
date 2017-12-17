@@ -3,6 +3,7 @@
 
 import click
 import numpy as np
+from tqdm import tqdm
 
 from .download_input import get_input
 
@@ -23,8 +24,22 @@ def spinlock_1(num_steps):
     print(spinlock)
     return spinlock[(spinlock.index(2017) + 1) % len_spinlock]
 
-def spinlock_2(arg):
-    pass
+
+def spinlock_2(num_steps):
+    num_steps = int(num_steps)
+    spinlock = [0]
+    len_spinlock = 1
+    num_iterations = int(5e6)
+    current_position = 0
+
+    for it in tqdm(range(1, num_iterations + 1)):
+        current_position += num_steps
+        current_position %= len_spinlock
+        spinlock.insert(current_position + 1, it)
+        len_spinlock += 1
+        current_position += 1
+    print(spinlock)
+    return spinlock[(spinlock.index(0) + 1) % len_spinlock]
 
 @click.command()
 def main():
