@@ -27,7 +27,7 @@ def spinlock_1(num_steps):
 
 def spinlock_2(num_steps):
     num_steps = int(num_steps)
-    num_iterations = int(5e6)
+    num_iterations = int(50e6)
     spinlock = [0]
     len_spinlock = np.arange(1, num_iterations + 1, dtype=int)
     current_position = np.zeros_like(len_spinlock)
