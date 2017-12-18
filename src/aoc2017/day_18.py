@@ -171,7 +171,7 @@ def duet_2(instructions):
     def rcv(x, id, instruction, registers, both_sending_queues):
 
         if both_sending_queues[id]:
-            registers[x] = both_sending_queues.pop(0)
+            registers[x] = both_sending_queues[id].pop(0)
             instruction += 1
 
         return instruction, registers, both_sending_queues
