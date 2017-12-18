@@ -103,7 +103,136 @@ def duet_1(instructions):
 
 
 def duet_2(instructions):
-    pass
+    instructions = instructions.split("\n")
+    parsed_instructions = []
+    for inst in instructions:
+        inst_parts = [part if part.isalpha() else int(part)
+                      for part in inst.split(" ")]
+
+        parsed_instructions.append((inst_parts[0], tuple(inst_parts[1:])))
+
+    both_registers = [defaultdict(int), defaultdict(int)]
+    both_sending_queues = [[], []]
+    for i, registers in enumerate(both_registers):
+        registers["p"] = i
+
+
+    def set(x, y, id, instruction, registers, both_sending_queues):
+        if isinstance(y, str):
+            y = registers[y]
+        registers[x] = y
+        instruction += 1
+        return instruction, registers, both_sending_queues
+
+    def add(x, y, id, instruction, registers, both_sending_queues):
+        if isinstance(y, str):
+            y = registers[y]
+        registers[x] += y
+        instruction += 1
+        return instruction, registers, both_sending_queues
+
+
+    def mul(x, y, id, instruction, registers, both_sending_queues):
+        if isinstance(y, str):
+            y = registers[y]
+        registers[x] *= y
+        instruction += 1
+        return instruction, registers, both_sending_queues
+
+    def mod(x, y, id, instruction, registers, both_sending_queues):
+        if isinstance(y, str):
+            y = registers[y]
+        registers[x] %= y
+        instruction += 1
+        return instruction, registers, both_sending_queues
+
+
+    def jgz(x, y, id, instruction, registers, both_sending_queues):
+        if isinstance(x, str):
+            x = registers[x]
+        if x > 0:
+            instruction += y
+        else:
+            instruction += 1
+        return instruction, registers, both_sending_queues
+
+
+    def snd(x, id, instruction, registers, both_sending_queues):
+        if isinstance(x, str):
+            x = registers[x]
+        if id == 1:
+            nonlocal send_count_1
+            send_count_1 += 1
+
+        both_sending_queues[(id + 1) % 2].append(x)
+        instruction += 1
+        return instruction, registers, both_sending_queues
+
+    def rcv(x, id, instruction, registers, both_sending_queues):
+
+        if both_sending_queues[id]:
+            registers[x] = both_sending_queues.pop(0)
+            instruction += 1
+
+        return instruction, registers, both_sending_queues
+
+
+
+    operations = {"snd": snd,
+                  "set": set,
+                  "add": add,
+                  "mul": mul,
+                  "mod": mod,
+                  "rcv": rcv,
+                  "jgz": jgz}
+
+    send_count_1 = 0
+    terminated_0 = False
+    terminated_1 = False
+    waiting_0 = False
+    waiting_1 = False
+    i_0 = 0
+    i_1 = 0
+    while not (terminated_0 and terminated_1):
+
+        if not terminated_0:
+            Id = 0
+            current_inst = parsed_instructions[i_0]
+            i_0_, registers, both_sending_queues = operations[current_inst[0]](*current_inst[1], Id, i_0, both_registers[Id], both_sending_queues)
+
+            if i_0_ == i_0:
+                weighting_0 = True
+            else:
+                weighting_0 = False
+                i_0 = i_0_
+
+            both_registers[Id] = registers
+
+            if not (0 <= i_0 < len(instructions)):
+                terminated_0 = True
+
+        if not terminated_1:
+            Id = 1
+            current_inst = parsed_instructions[i_1]
+            i_1_, registers, both_sending_queues = operations[current_inst[0]](*current_inst[1], Id, i_1, both_registers[Id], both_sending_queues)
+
+            if i_1_ == i_1:
+                weighting_1 = True
+            else:
+                weighting_1 = False
+                i_1 = i_1_
+
+            both_registers[Id] = registers
+
+            if not (0 <= i_1 < len(instructions)):
+                terminated_1 = True
+
+        if weighting_0 and weighting_1:
+            terminated_0 = terminated_1 = True
+
+    return send_count_1
+
+
 
 
 @click.command()
