@@ -78,6 +78,8 @@ def duet_1(instructions):
         nonlocal i
         if isinstance(x, str):
             x = registers[x]
+        if isinstance(y, str):
+            y = registers[y]
         if x > 0:
             i += y
         else:
@@ -150,6 +152,8 @@ def duet_2(instructions):
     def jgz(x, y, id, instruction, registers, both_sending_queues):
         if isinstance(x, str):
             x = registers[x]
+        if isinstance(y, str):
+            y = registers[y]
         if x > 0:
             instruction += y
         else:
