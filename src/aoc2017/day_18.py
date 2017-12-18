@@ -8,7 +8,7 @@ from .download_input import get_input
 
 
 def duet_1(instructions):
-    pass
+
 
 
 def duet_2(instructions):
@@ -16,6 +16,7 @@ def duet_2(instructions):
 
 @click.command()
 def main():
+    input_ = "set a 1\nadd a 2\nmul a a\nmod a 5\nsnd a\nset a 0\nrcv a\njgz a -1\nset a 1\njgz a -2"
     input_ = get_input(18)
     print("Input:\n", input_)
     print("Output", duet_1(input_))
