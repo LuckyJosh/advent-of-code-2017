@@ -145,22 +145,20 @@ def fractral_1(rules, num_iterations=5):
             print(pattern)
             print(pattern.shape)
 
-
-
     return np.sum(pattern == "#")
 
 
 
 
-def fractral_2(rules):
-    pass
+def fractral_2(rules, num_iterations=18):
+    return fractral_1(rules, num_iterations=num_iterations)
 
 @click.command()
 def main():
     input_ = get_input(21)
     #input_ = "../.# => ##./#../...\n.#./..#/### => #..#/..../..../#..#"
     print("Input:\n", input_)
-    print("Output\n", fractral_1(input_, num_iterations=5))
+    print("Output\n", fractral_1(input_))
     print("Output", fractral_2(input_))
 
 
