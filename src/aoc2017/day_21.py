@@ -27,8 +27,9 @@ def fractral_1(rules):
     flattend_index_3by3 = [(0, 0), (0, 1), (0, 2),
                            (1, 0), (1, 1), (1, 2),
                            (2, 0), (2, 1), (2, 2)]
-    rules = rules.replace("/","").split("\n")
-    print(rules)
+    rules = rules.replace("/","").replace(" ", "").split("\n")
+    rules = {rule.split("=>")[0]: rule.split("=>")[1] for rule in rules}
+    return rules
 
 
 
