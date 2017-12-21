@@ -3,13 +3,28 @@
 
 import click
 import numpy as np
+import re
 
 from .download_input import get_input
 
+regex = r"p=<(-?\d*,-?\d*,-?\d*)>, v=<(-?\d*,-?\d*,-?\d*)>, a=<(-?\d*,-?\d*,-?\d*)>"
 
 def particles_1(initials):
-    pass
+    initials = initials.split("\n")
+    num_particles = len(initials)
 
+    positions = np.zeros((num_particles, 3), dtype=int)
+    velocities = np.zeros((num_particles, 3), dtype=int)
+    accelerations = np.zeros((num_particles, 3), dtype=int)
+
+    for i, particle in enumerate(initials):
+        match = re.match(regex, particle)
+        p, v, a = match.groups()
+        positions[i] = p.split(",")
+        velocities[i] = v.split(",")
+        accelerations[i] = a.split(",")
+
+    print(positions)
 
 def particles_2(initials):
     pass
