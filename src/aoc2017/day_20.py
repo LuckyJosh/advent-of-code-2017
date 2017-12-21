@@ -45,7 +45,44 @@ def particles_1(initials):
     return closest_index
 
 def particles_2(initials):
-    pass
+    initials = initials.split("\n")
+    num_particles = len(initials)
+
+    positions = np.zeros((num_particles, 3), dtype=int)
+    velocities = np.zeros((num_particles, 3), dtype=int)
+    accelerations = np.zeros((num_particles, 3), dtype=int)
+
+    for i, particle in enumerate(initials):
+        match = re.match(regex, particle)
+        p, v, a = match.groups()
+        positions[i] = p.split(",")
+        velocities[i] = v.split(",")
+        accelerations[i] = a.split(",")
+
+    closest_index = np.argmin(np.sum(positions, axis=1))
+
+    cycles_without_collision = 0
+    while cycles_without_collision < 100:
+
+        velocities = velocities + accelerations
+        positions = positions + velocities
+
+        position_comparison = positions[:, :, np.newaxis] == positions
+        equal_positions_matrix = np.prod(position_comparison, axis=2)
+        collision_indicies = np.argwhere(np.sum(equal_positions_matrix, axis=1) > 1).flatten()
+
+        if collision_indicies:
+            cycles_without_collision = 0
+            positions[collision_indicies, :] = 0
+            velocities[collision_indicies, :] = 0
+            accelerations[collision_indicies, :] = 0
+        else:
+            cycles_without_collision += 1
+
+    non_collided_particles = np.sum(np.sum(positions, axis=1) > 0)
+    return non_collided_particles
+
+
 
 @click.command()
 def main():
