@@ -19,7 +19,7 @@ def fractral_1(rules, num_iterations=5):
     premutations_2by2 = [((0, 1), (2, 3)), ((0, 2), (1, 3)),
                              ((0, 1, 2, 3),), ((0, 2), (1, 3)), ((0, 2, 3, 1),)]
 
-    permutation_3by3 = [((0, 2), (3, 5), (6, 8)), ((0, 6), (1, 7), (2, 8)),
+    permutations_3by3 = [((0, 2), (3, 5), (6, 8)), ((0, 6), (1, 7), (2, 8)),
                             ((0, 2, 8, 6), (1, 5, 7, 3)), ((0, 8), (1, 7), (2, 6), (3, 5)), ((0, 6, 8, 2), (1, 3, 7, 5))]
 
     flattend_index_2by2 = [(0, 0), (0, 1),
@@ -52,6 +52,10 @@ def fractral_1(rules, num_iterations=5):
         if len(rule_input) == 4:
             for permutation in premutations_2by2:
                 new_input = premute_string(rule_input, permutation, dim=2)
+                rules_extension[new_input] = rule_output
+        elif len(rule_input) == 9:
+            for permutation in permutations_3by3:
+                new_input = premute_string(rule_input, permutation, dim=3)
                 rules_extension[new_input] = rule_output
 
     rules.update(rules_extension)
