@@ -24,14 +24,31 @@ def particles_1(initials):
         velocities[i] = v.split(",")
         accelerations[i] = a.split(",")
 
-    print(positions)
+    closest_index = np.argmin(np.sum(positions, axis=1))
+    print(closest_index)
+    cycles_without_change = 0
+    while cycles_without_change < 100:
+
+        velocities = velocities + accelerations
+        positions = positions + velocities
+
+        new_closest_index = np.argmin(np.sum(positions, axis=1))
+
+        if closest_index == new_closest_index:
+            cycles_without_change += 1
+        else:
+            closest_index = new_closest_index
+            cycles_without_change = 0
+
+    return closest_index
 
 def particles_2(initials):
     pass
 
 @click.command()
 def main():
-    input_ = get_input(20)
+    #input_ = get_input(20)
+    input_ = "p=<3,0,0>, v=<2,0,0>, a=<-1,0,0>\np=<4,0,0>, v=<0,0,0>, a=<-2,0,0> "
     print("Input:\n", input_)
     print("Output", particles_1(input_))
     print("Output", particles_2(input_))
