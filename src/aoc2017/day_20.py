@@ -4,6 +4,7 @@
 import click
 import numpy as np
 import re
+from tqdm import tqdm
 
 
 from .download_input import get_input
@@ -62,32 +63,43 @@ def particles_2(initials):
     closest_index = np.argmin(np.sum(positions, axis=1))
 
     cycles_without_collision = 0
-    while cycles_without_collision < 100:
+    max_without_collision = 10
+    collision_indicies = set()
+    with tqdm(total=max_without_collision) as pbar:
+        while cycles_without_collision < max_without_collision:
 
-        velocities = velocities + accelerations
-        positions = positions + velocities
+            velocities = velocities + accelerations
+            positions = positions + velocities
 
-        position_comparison = positions[:, :, np.newaxis] == positions
-        equal_positions_matrix = np.prod(position_comparison, axis=2)
-        collision_indicies = np.argwhere(np.sum(equal_positions_matrix, axis=1) > 1).flatten()
+            position_comparison = positions[:, np.newaxis] == positions[:,:]
 
-        if collision_indicies:
-            cycles_without_collision = 0
-            positions[collision_indicies, :] = 0
-            velocities[collision_indicies, :] = 0
-            accelerations[collision_indicies, :] = 0
-        else:
-            cycles_without_collision += 1
+            equal_positions_matrix = np.prod(position_comparison, axis=2)
+            new_collision_indicies = np.argwhere(np.sum(equal_positions_matrix, axis=1) > 1).flatten()
+            new_collision_indicies = [idx
+                                      for idx in new_collision_indicies
+                                      if idx not in collision_indicies]
 
-    non_collided_particles = np.sum(np.sum(positions, axis=1) > 0)
-    return non_collided_particles
+            collision_indicies.update(set(new_collision_indicies))
+
+            if len(new_collision_indicies) > 0:
+                cycles_without_collision = 0
+                positions[new_collision_indicies, :]
+                velocities[new_collision_indicies, :]
+                accelerations[new_collision_indicies, :]
+            else:
+                pbar.update(1)
+                cycles_without_collision += 1
+
+
+    return num_particles - len(collision_indicies)
 
 
 
 @click.command()
 def main():
-    input_ = get_input(20)
+    #input_ = get_input(20)
     #input_ = "p=<3,0,0>, v=<2,0,0>, a=<-1,0,0>\np=<4,0,0>, v=<0,0,0>, a=<-2,0,0> "
+    input_ = "p=<-6,0,0>, v=<3,0,0>, a=<0,0,0>\np=<-4,0,0>, v=<2,0,0>, a=<0,0,0>\np=<-2,0,0>, v=<1,0,0>, a=<0,0,0>\np=<3,0,0>, v=<-1,0,0>, a=<0,0,0>"
     print("Input:\n", input_)
     print("Output", particles_1(input_))
     print("Output", particles_2(input_))
