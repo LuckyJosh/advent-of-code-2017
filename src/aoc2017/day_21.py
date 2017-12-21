@@ -4,6 +4,7 @@
 import click
 import numpy as np
 import math as m
+from tqdm import tqdm
 
 from .download_input import get_input
 
@@ -61,7 +62,7 @@ def fractral_1(rules, num_iterations=5):
                 rules_extension[new_input] = rule_output
 
     rules.update(rules_extension)
-    print(rules)
+    # print(rules)
     #start_pattern = [".#.", "..#", "###"]
 
     pattern = np.array([[".", "#", "."],
@@ -77,15 +78,15 @@ def fractral_1(rules, num_iterations=5):
         return tiled_indicies
 
 
-    for it in range(num_iterations):
-        print(f"Iteration {it}")
+    for it in tqdm(range(num_iterations)):
+        # print(f"Iteration {it}")
         size = len(pattern)
-        print("pattern size:", size)
-        print("pattern:")
-        print(pattern)
+        # print("pattern size:", size)
+        # print("pattern:")
+        # print(pattern)
 
         if size % 2 == 0:
-            print("Size divisible by 2")
+            # print("Size divisible by 2")
             indices = np.arange(size)
 
             num_parts = size // 2
@@ -95,9 +96,9 @@ def fractral_1(rules, num_iterations=5):
 
             tiled_pattern = [pattern[idx] for idx in tiled_indicies]
 
-            print(f"tiled_patterns:{len(tiled_pattern)}")
-            for pat in tiled_pattern:
-                print(pat);print()
+            # print(f"tiled_patterns:{len(tiled_pattern)}")
+            #for pat in tiled_pattern:
+                # print(pat);# print()
 
 
             new_pattern = np.zeros((num_parts*3, num_parts*3), dtype='<U1')
@@ -112,12 +113,12 @@ def fractral_1(rules, num_iterations=5):
 
                 new_pattern[idx_new] = np.array(new_chars).reshape(3, 3)
             pattern = new_pattern
-            print("new pattern")
-            print(pattern)
-            print(pattern.shape)
+            # print("new pattern")
+            # print(pattern)
+            # print(pattern.shape)
 
         elif size % 3 == 0:
-            print("Size divisible by 3")
+            # print("Size divisible by 3")
 
             indices = np.arange(size)
 
@@ -128,9 +129,9 @@ def fractral_1(rules, num_iterations=5):
 
             tiled_pattern = [pattern[idx] for idx in tiled_indicies]
 
-            print(f"tiled_patterns:{len(tiled_pattern)}")
-            for pat in tiled_pattern:
-                print(pat);print()
+            # print(f"tiled_patterns:{len(tiled_pattern)}")
+            #for pat in tiled_pattern:
+                # print(pat);# print()
 
             new_pattern = np.zeros((num_parts*4, num_parts*4), dtype='<U1')
             indices_new = np.arange(4*num_parts)
@@ -141,9 +142,9 @@ def fractral_1(rules, num_iterations=5):
                 new_chars = [char for char in rules["".join(tile.flatten())]]
                 new_pattern[idx_new] = np.array(new_chars).reshape(4, 4)
             pattern = new_pattern
-            print("new pattern")
-            print(pattern)
-            print(pattern.shape)
+            # print("new pattern")
+            # print(pattern)
+            # print(pattern.shape)
 
     return np.sum(pattern == "#")
 
