@@ -58,4 +58,4 @@ cli_entry_point.add_command(day_17.main, name="day-17")
 cli_entry_point.add_command(day_18.main, name="day-18")
 
 cli_entry_point.add_command(day_20.main, name="day-20")
-cli_entry_point.add_command(day_20.main, name="day-21")
+cli_entry_point.add_command(day_21.main, name="day-21")
