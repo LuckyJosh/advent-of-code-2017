@@ -5,6 +5,7 @@ import click
 import numpy as np
 import re
 
+
 from .download_input import get_input
 
 regex = r"p=<(-?\d*,-?\d*,-?\d*)>, v=<(-?\d*,-?\d*,-?\d*)>, a=<(-?\d*,-?\d*,-?\d*)>"
@@ -25,9 +26,9 @@ def particles_1(initials):
         accelerations[i] = a.split(",")
 
     closest_index = np.argmin(np.sum(positions, axis=1))
-    print(closest_index)
+
     cycles_without_change = 0
-    while cycles_without_change < 100:
+    while cycles_without_change < 100000:
 
         velocities = velocities + accelerations
         positions = positions + velocities
@@ -48,8 +49,8 @@ def particles_2(initials):
 
 @click.command()
 def main():
-    #input_ = get_input(20)
-    input_ = "p=<3,0,0>, v=<2,0,0>, a=<-1,0,0>\np=<4,0,0>, v=<0,0,0>, a=<-2,0,0> "
+    input_ = get_input(20)
+    #input_ = "p=<3,0,0>, v=<2,0,0>, a=<-1,0,0>\np=<4,0,0>, v=<0,0,0>, a=<-2,0,0> "
     print("Input:\n", input_)
     print("Output", particles_1(input_))
     print("Output", particles_2(input_))
