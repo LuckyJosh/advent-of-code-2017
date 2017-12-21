@@ -114,6 +114,7 @@ def fractral_1(rules, num_iterations=5):
             pattern = new_pattern
             print("new pattern")
             print(pattern)
+            print(pattern.shape)
 
         elif size % 3 == 0:
             print("Size divisible by 3")
@@ -142,10 +143,10 @@ def fractral_1(rules, num_iterations=5):
             pattern = new_pattern
             print("new pattern")
             print(pattern)
+            print(pattern.shape)
 
 
 
-    print(pattern)
     return np.sum(pattern == "#")
 
 
