@@ -22,7 +22,7 @@ def fractral_1(rules, num_iterations=5):
                          ((0, 3),), ((1, 2),)]
 
     permutations_3by3 = [((0, 2), (3, 5), (6, 8)), ((0, 6), (1, 7), (2, 8)),
-                            ((0, 2, 8, 6), (1, 5, 7, 3)), ((0, 8), (1, 7), (2, 6), (3, 5)), ((0, 6, 8, 2), (1, 3, 7, 5))
+                            ((0, 2, 8, 6), (1, 5, 7, 3)), ((0, 8), (1, 7), (2, 6), (3, 5)), ((0, 6, 8, 2), (1, 3, 7, 5)),
                          ((0, 8), (1, 5), (3, 7)), ((1, 3), (5, 7), (2, 6))]
 
     flattend_index_2by2 = [(0, 0), (0, 1),
@@ -41,7 +41,6 @@ def fractral_1(rules, num_iterations=5):
             for i in range(0, len(step)-1):
                 old_idx, new_idx = step[i], step[i+1]
                 new_string_list[new_idx] = string_list[old_idx]
-
 
         string_list = new_string_list
         return "".join(string_list)
@@ -78,18 +77,59 @@ def fractral_1(rules, num_iterations=5):
         return tiled_indicies
 
 
-    for i in range(num_iterations):
+    for it in range(num_iterations):
+        print(f"Iteration {it}")
         size = len(pattern)
-        if size % 3 == 0:
+        print("pattern size:", size)
+        print("pattern:")
+        print(pattern)
+
+        if size % 2 == 0:
+            print("Size divisible by 2")
+            indices = np.arange(size)
+
+            num_parts = size // 2
+            split_indicies = np.split(indices, [2 * (i + 1) for i in range(0, num_parts)])[:-1]
+
+            tiled_indicies = get_tiled_indicies(split_indicies)
+
+            tiled_pattern = [pattern[idx] for idx in tiled_indicies]
+
+            print(f"tiled_patterns:{len(tiled_pattern)}")
+            for pat in tiled_pattern:
+                print(pat);print()
+
+
+            new_pattern = np.zeros((num_parts*3, num_parts*3), dtype='<U1')
+            indices_new = np.arange(3*num_parts)
+            split_indicies_new = np.split(indices_new, [3 * (i + 1) for i in range(0, num_parts)])[:-1]
+
+            tiled_indicies_new = get_tiled_indicies(split_indicies_new)
+
+            for idx_new, tile in zip(tiled_indicies_new, tiled_pattern):
+
+                new_chars = [char for char in rules["".join(tile.flatten())]]
+
+                new_pattern[idx_new] = np.array(new_chars).reshape(3, 3)
+            pattern = new_pattern
+            print("new pattern")
+            print(pattern)
+
+        elif size % 3 == 0:
+            print("Size divisible by 3")
+
             indices = np.arange(size)
 
             num_parts = size // 3
             split_indicies = np.split(indices, [3 * (i + 1) for i in range(0, num_parts)])[:-1]
-            print("split", split_indicies)
+
             tiled_indicies = get_tiled_indicies(split_indicies)
-            print("tiled", tiled_indicies)
+
             tiled_pattern = [pattern[idx] for idx in tiled_indicies]
-            print(tiled_pattern)
+
+            print(f"tiled_patterns:{len(tiled_pattern)}")
+            for pat in tiled_pattern:
+                print(pat);print()
 
             new_pattern = np.zeros((num_parts*4, num_parts*4), dtype='<U1')
             indices_new = np.arange(4*num_parts)
@@ -100,34 +140,12 @@ def fractral_1(rules, num_iterations=5):
                 new_chars = [char for char in rules["".join(tile.flatten())]]
                 new_pattern[idx_new] = np.array(new_chars).reshape(4, 4)
             pattern = new_pattern
+            print("new pattern")
+            print(pattern)
 
-        elif size % 2 == 0:
-            indices = np.arange(size)
 
-            num_parts = size // 2
-            split_indicies = np.split(indices, [2 * (i + 1) for i in range(0, num_parts)])[:-1]
-            print("split", split_indicies)
-            tiled_indicies = get_tiled_indicies(split_indicies)
-            print("tiled", tiled_indicies)
-            tiled_pattern = [pattern[idx] for idx in tiled_indicies]
-            print(tiled_pattern)
 
-            new_pattern = np.zeros((num_parts*3, num_parts*3), dtype='<U1')
-            indices_new = np.arange(3*num_parts)
-            split_indicies_new = np.split(indices_new, [3 * (i + 1) for i in range(0, num_parts)])[:-1]
-            print(split_indicies_new)
-            tiled_indicies_new = get_tiled_indicies(split_indicies_new)
-            print(tiled_indicies_new)
-            print(len(tiled_indicies_new), len(tiled_pattern))
-            for idx_new, tile in zip(tiled_indicies_new, tiled_pattern):
-                print(tile)
-                print("".join(tile.flatten()))
-                print(rules["".join(tile.flatten())])
-                new_chars = [char for char in rules["".join(tile.flatten())]]
-                print(new_chars)
-                new_pattern[idx_new] = np.array(new_chars).reshape(3, 3)
-            pattern = new_pattern
-
+    print(pattern)
     return np.sum(pattern == "#")
 
 
