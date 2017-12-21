@@ -32,13 +32,14 @@ def particles_1(initials):
         velocities = velocities + accelerations
         positions = positions + velocities
 
-        new_closest_index = np.argmin(np.sum(positions, axis=1))
+        new_closest_index = np.argmin(np.sum(np.abs(positions), axis=1))
 
         if closest_index == new_closest_index:
             cycles_without_change += 1
         else:
             closest_index = new_closest_index
             cycles_without_change = 0
+
 
     return closest_index
 
