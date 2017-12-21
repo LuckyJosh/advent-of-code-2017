@@ -63,7 +63,7 @@ def particles_2(initials):
     closest_index = np.argmin(np.sum(positions, axis=1))
 
     cycles_without_collision = 0
-    max_without_collision = 10
+    max_without_collision = 1000
     collision_indicies = set()
     with tqdm(total=max_without_collision) as pbar:
         while cycles_without_collision < max_without_collision:
@@ -97,9 +97,9 @@ def particles_2(initials):
 
 @click.command()
 def main():
-    #input_ = get_input(20)
+    input_ = get_input(20)
     #input_ = "p=<3,0,0>, v=<2,0,0>, a=<-1,0,0>\np=<4,0,0>, v=<0,0,0>, a=<-2,0,0> "
-    input_ = "p=<-6,0,0>, v=<3,0,0>, a=<0,0,0>\np=<-4,0,0>, v=<2,0,0>, a=<0,0,0>\np=<-2,0,0>, v=<1,0,0>, a=<0,0,0>\np=<3,0,0>, v=<-1,0,0>, a=<0,0,0>"
+    #input_ = "p=<-6,0,0>, v=<3,0,0>, a=<0,0,0>\np=<-4,0,0>, v=<2,0,0>, a=<0,0,0>\np=<-2,0,0>, v=<1,0,0>, a=<0,0,0>\np=<3,0,0>, v=<-1,0,0>, a=<0,0,0>"
     print("Input:\n", input_)
     print("Output", particles_1(input_))
     print("Output", particles_2(input_))
