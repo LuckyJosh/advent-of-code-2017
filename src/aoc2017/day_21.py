@@ -3,11 +3,12 @@
 
 import click
 import numpy as np
+import math as m
 
 from .download_input import get_input
 
 
-def fractral_1(rules):
+def fractral_1(rules, num_iterations=5):
     # flip on y-axis, flip on x-axis, rotate 90°, rotate 180°, rotate 270°
     # elements that stay the same are skipped
     # (x, y, z) :
@@ -54,6 +55,29 @@ def fractral_1(rules):
                 rules_extension[new_input] = rule_output
 
     rules.update(rules_extension)
+
+    #start_pattern = [".#.", "..#", "###"]
+
+    pattern = np.array([[".", "#", "."],
+                        [".", ".", "#"],
+                        ["#", "#", "#"]])
+
+    # @incomplete:: implement: as_strided(a, shape=(4,2,2), strides=(2*8, 8*8, 8))
+
+    for i in range(num_iterations):
+        size = len(pattern)
+        if size % 3 == 0:
+            num_parts = size / 3
+            new_patterns = []
+            for i in range(parts):
+                new_pattern = pattern[0:3,0:3]
+                new_patterns.append(new_pattern)
+
+
+        elif size_length % 2 == 0:
+
+
+
 
 
     return rules
