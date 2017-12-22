@@ -190,8 +190,8 @@ def virus_2(start_area, num_steps):
 
 @click.command()
 def main():
-    #input_ = get_input(22)
-    input_ = "..#\n#..\n..."
+    input_ = get_input(22)
+    #input_ = "..#\n#..\n..."
     print("Input:\n", input_)
     print("Output", virus_1(input_, 10000))
     print("Output", virus_2(input_, 1000000))
