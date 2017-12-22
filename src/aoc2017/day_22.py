@@ -8,15 +8,15 @@ from .download_input import get_input
 
 
 def virus_1(start_area):
-    pass
-
+    start_area = [list(line) for line in start_area.split("\n")]
+    return start_area
 
 def virus_2(start_area):
     pass
 
 @click.command()
 def main():
-    input_ = get_input()
+    input_ = get_input(22)
     print("Input:\n", input_)
     print("Output", virus_1(input_))
     print("Output", virus_2(input_))
