@@ -63,9 +63,7 @@ def fractral_1(rules, num_iterations=5):
                 rules_extension[new_input] = rule_output
 
     rules.update(rules_extension)
-    with open("extended_rules.txt", "w") as f:
-        for k, v in rules.items():
-            f.write(f"{k} => {v}\n")
+
 
     # print(rules)
     #start_pattern = [".#.", "..#", "###"]
