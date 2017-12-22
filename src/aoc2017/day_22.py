@@ -89,7 +89,8 @@ def virus_2(start_area, num_steps):
 
     center = area_size // 2
 
-    def build_gird(infected_positions, current_position):
+    def build_gird(infected_positions, weakend_positions,
+                   flagged_positions, current_position):
         xmax = 0
         xmin = 0
         ymax = 0
@@ -108,8 +109,15 @@ def virus_2(start_area, num_steps):
                 char = " . " if (i + ymin, j + xmin) != current_position else "(.)"
                 line.append(char)
             grid.append(line)
-        for y, x in infected_positions:
-            grid[y - ymin][x - xmin] = " # " if (y, x) != current_position else "(#)"
+
+        for y in range(size):
+            for x in range(size):
+                if (y, x) in infected_positions:
+                    grid[y - ymin][x - xmin] = " # " if (y, x) != current_position else "(#)"
+                elif (y, x) in weakend_positions:
+                    grid[y - ymin][x - xmin] = " W " if (y, x) != current_position else "(W)"
+                elif (y, x) in flagged_positions:
+                    grid[y - ymin][x - xmin] = " F " if (y, x) != current_position else "(F)"
         return grid
 
     def plot_grid(infected_positions, current_direction):
@@ -137,7 +145,7 @@ def virus_2(start_area, num_steps):
     current_position = center, center
     current_direction = "n"
 
-    plot_grid(infected_positions, current_position)
+    plot_grid(infected_positions, weakend_positions, flagged_positions, current_position)
 
     infection_counter = 0
     for step in range(num_steps):
@@ -162,7 +170,7 @@ def virus_2(start_area, num_steps):
         dx, dy = directions[current_direction]
         current_position = current_position[0] + dy, current_position[1] + dx
 
-    plot_grid(infected_positions, current_direction)
+    plot_grid(infected_positions, weakend_positions, flagged_positions, current_position)
 
 
     print(f"{infection_counter}/{num_steps}")
@@ -175,7 +183,7 @@ def main():
     #input_ = "..#\n#..\n..."
     print("Input:\n", input_)
     print("Output", virus_1(input_, 10000))
-    print("Output", virus_2(input_))
+    print("Output", virus_2(input_), 5)
 
 
 if __name__ == '__main__':
