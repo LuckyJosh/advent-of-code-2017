@@ -95,7 +95,7 @@ def virus_2(start_area, num_steps):
         xmin = 0
         ymax = 0
         ymin = 0
-        for special_positions in [infected_positions, weakend_positions, flagged_positions]:
+        for special_positions in [[current_position], infected_positions, weakend_positions, flagged_positions]:
             for y, x in special_positions:
                 xmax = max(xmax, x)
                 xmin = min(xmin, x)
@@ -105,6 +105,7 @@ def virus_2(start_area, num_steps):
 
 
         size = max(xmax - xmin, ymax - ymin) + 1
+
         grid = []
         for i in range(size):
             line = []
@@ -115,12 +116,12 @@ def virus_2(start_area, num_steps):
 
         for y in range(size):
             for x in range(size):
-                if (y, x) in infected_positions:
-                    grid[y - ymin][x - xmin] = " # " if (y, x) != current_position else "(#)"
-                elif (y, x) in weakend_positions:
-                    grid[y - ymin][x - xmin] = " W " if (y, x) != current_position else "(W)"
-                elif (y, x) in flagged_positions:
-                    grid[y - ymin][x - xmin] = " F " if (y, x) != current_position else "(F)"
+                if (y+ymin, x+xmin) in infected_positions:
+                    grid[y][x] = " # " if (y+ymin, x+xmin) != current_position else "(#)"
+                elif (y+ymin, x+xmin) in weakend_positions:
+                    grid[y][x] = " W " if (y+ymin, x+xmin) != current_position else "(W)"
+                elif (y+ymin, x+xmin) in flagged_positions:
+                    grid[y][x] = " F " if (y+ymin, x+xmin) != current_position else "(F)"
         return grid
 
     def plot_grid(infected_positions, weakend_positions, flagged_positions, current_position):
