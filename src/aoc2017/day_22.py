@@ -3,6 +3,7 @@
 
 import click
 import numpy as np
+from tqdm import tqdm
 
 from .download_input import get_input
 
@@ -152,11 +153,10 @@ def virus_2(start_area, num_steps):
     plot_grid(infected_positions, weakend_positions, flagged_positions, current_position)
 
     infection_counter = 0
-    for step in range(num_steps):
+    for step in tqdm(range(num_steps)):
 
         if current_position in flagged_positions:
             current_direction = turn_back[current_direction]
-            print("hier")
             flagged_positions.discard(current_position)
 
         elif current_position in infected_positions:
@@ -175,13 +175,13 @@ def virus_2(start_area, num_steps):
 
         dx, dy = directions[current_direction]
         current_position = current_position[0] + dy, current_position[1] + dx
-        print(current_direction)
-        print(f"{current_position[0] - dy, current_position[1] - dx} --> {current_position}")
-        print(infected_positions)
-        print(weakend_positions)
-        print(flagged_positions)
+        #print(current_direction)
+        #print(f"{current_position[0] - dy, current_position[1] - dx} --> {current_position}")
+        #print(infected_positions)
+        #print(weakend_positions)
+        #print(flagged_positions)
 
-        plot_grid(infected_positions, weakend_positions, flagged_positions, current_position)
+    plot_grid(infected_positions, weakend_positions, flagged_positions, current_position)
 
 
     print(f"{infection_counter}/{num_steps}")
@@ -194,7 +194,7 @@ def main():
     input_ = "..#\n#..\n..."
     print("Input:\n", input_)
     print("Output", virus_1(input_, 10000))
-    print("Output", virus_2(input_, 7))
+    print("Output", virus_2(input_, 1000000))
 
 
 if __name__ == '__main__':
