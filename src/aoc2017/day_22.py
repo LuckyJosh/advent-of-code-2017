@@ -143,7 +143,7 @@ def virus_2(start_area, num_steps):
     for step in range(num_steps):
 
         if current_direction in flagged_positions:
-
+            current_direction = turn_back[current_direction]
             flagged_positions.discard(current_position)
 
         elif current_position in infected_positions:
@@ -156,7 +156,6 @@ def virus_2(start_area, num_steps):
             weakend_positions.discard(current_position)
             infected_positions.add(current_position)
         else:
-            # @incomplete:
             current_direction = turn_left[current_direction]
             weakend_positions.add(current_position)
 
