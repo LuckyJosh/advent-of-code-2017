@@ -170,7 +170,7 @@ def virus_2(start_area, num_steps):
         dx, dy = directions[current_direction]
         current_position = current_position[0] + dy, current_position[1] + dx
 
-    plot_grid(infected_positions, weakend_positions, flagged_positions, current_position)
+        plot_grid(infected_positions, weakend_positions, flagged_positions, current_position)
 
 
     print(f"{infection_counter}/{num_steps}")
@@ -179,8 +179,8 @@ def virus_2(start_area, num_steps):
 
 @click.command()
 def main():
-    input_ = get_input(22)
-    #input_ = "..#\n#..\n..."
+    #input_ = get_input(22)
+    input_ = "..#\n#..\n..."
     print("Input:\n", input_)
     print("Output", virus_1(input_, 10000))
     print("Output", virus_2(input_, 5))
