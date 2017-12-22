@@ -26,15 +26,16 @@ def virus_1(start_area, num_steps):
 
         size = max(xmax - xmin, ymax - ymin) + 1
         print(size)
+        print(current_position)
         grid = []
         for i in range(size):
             line = []
             for j in range(size):
-                char = " . " if (i, j) != current_position else "(.)"
+                char = " . " if (i + ymin, j + xmin) != current_position else "(.)"
                 line.append(char)
             grid.append(line)
         for y, x in infected_positions:
-            print(y - ymin, x - xmin )
+            print(y - ymin, x - xmin)
             grid[y - ymin][x - xmin] = " # " if (y, x) != current_position else "(#)"
         return grid
 
@@ -90,7 +91,7 @@ def main():
     #input_ = get_input(22)
     input_ = "..#\n#..\n..."
     print("Input:\n", input_)
-    print("Output", virus_1(input_, 7))
+    print("Output", virus_1(input_, 70))
     print("Output", virus_2(input_))
 
 
