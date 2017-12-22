@@ -55,6 +55,11 @@ def fractral_1(rules, num_iterations=5):
         if len(rule_input) == 4:
             for permutation in premutations_2by2:
                 new_input = premute_string(rule_input, permutation, dim=2)
+                if rule_input == "##..":
+                    print(rule_input, permutation, new_input, rule_output)
+                if new_input ==  "..##":
+                    print(rule_input, permutation, new_input, rule_output)
+
                 rules_extension[new_input] = rule_output
         elif len(rule_input) == 9:
             for permutation in permutations_3by3:
