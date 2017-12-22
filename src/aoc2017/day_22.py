@@ -95,11 +95,14 @@ def virus_2(start_area, num_steps):
         xmin = 0
         ymax = 0
         ymin = 0
-        for y, x in infected_positions:
-            xmax = max(xmax, x)
-            xmin = min(xmin, x)
-            ymax = max(ymax, y)
-            ymin = min(ymin, y)
+        for special_positions in [infected_positions, weakend_positions, flagged_positions]:
+            for y, x in special_positions:
+                xmax = max(xmax, x)
+                xmin = min(xmin, x)
+                ymax = max(ymax, y)
+                ymin = min(ymin, y)
+
+
 
         size = max(xmax - xmin, ymax - ymin) + 1
         grid = []
