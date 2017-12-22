@@ -154,7 +154,7 @@ def virus_2(start_area, num_steps):
     infection_counter = 0
     for step in range(num_steps):
 
-        if current_direction in flagged_positions:
+        if current_position in flagged_positions:
             current_direction = turn_back[current_direction]
             print("hier")
             flagged_positions.discard(current_position)
