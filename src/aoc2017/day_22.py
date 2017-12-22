@@ -13,15 +13,42 @@ def virus_1(start_area, num_steps):
 
     center = area_size // 2
 
+    def build_gird(infected_positions):
+        xmax = 0
+        ymax = 0
+        for y, x in infected_positions:
+            if x > xmax:
+                xmax = x
+            if y > ymax:
+                ymax = y
+        size = max(xmax, ymax) + 1
+        print(size)
+        grid = []
+        for i in range(size):
+            line = []
+            for j in range(size):
+                line.append(".")
+            grid.append(line)
+        for y, x in infected_positions:
+            print(y, x)
+            grid[y][x] = "#"
+        return grid
+
+    def plot_grid(infected_positions):
+        grid = build_gird(infected_positions)
+        for line in grid:
+            print(line)
+        print()
+
     infected_positions = set()
     for i in range(area_size):
         for j in range(area_size):
             if start_area[i][j] == "#":
                 infected_positions.add((i, j))
 
+
     print(infected_positions)
-
-
+    plot_grid(infected_positions)
 
     directions = {"n": (0, 1), "e": (1, 0), "s": (0, -1), "w": (-1, 0)}
     turn_right = {"n": "e", "e": "s", "s": "w", "w": "n"}
@@ -42,6 +69,9 @@ def virus_1(start_area, num_steps):
 
         dx, dy = directions[current_direction]
         current_position = current_position[0] + dy, current_position[1] + dx
+
+        plot_grid(infected_positions)
+
 
     print(f"{infection_counter}/{num_steps}")
     return infection_counter
