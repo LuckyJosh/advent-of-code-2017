@@ -13,29 +13,33 @@ def virus_1(start_area, num_steps):
 
     center = area_size // 2
 
-    def build_gird(infected_positions):
+    def build_gird(infected_positions, current_position):
         xmax = 0
+        xmin = 0
         ymax = 0
+        ymin = 0
         for y, x in infected_positions:
-            if x > xmax:
-                xmax = x
-            if y > ymax:
-                ymax = y
-        size = max(xmax, ymax) + 1
+            xmax = max(xmax, x)
+            xmin = min(xmin, x)
+            ymax = max(ymax, y)
+            ymin = min(ymin, y)
+
+        size = max(xmax - xmin, ymax - ymin) + 1
         print(size)
         grid = []
         for i in range(size):
             line = []
             for j in range(size):
-                line.append(".")
+                char = " . " if (i, j) != current_position else "(.)"
+                line.append(char)
             grid.append(line)
         for y, x in infected_positions:
-            print(y, x)
-            grid[y][x] = "#"
+            print(y - ymin, x - xmin )
+            grid[y - ymin][x - xmin] = " # " if (y, x) != current_position else "(#)"
         return grid
 
-    def plot_grid(infected_positions):
-        grid = build_gird(infected_positions)
+    def plot_grid(infected_positions, current_direction):
+        grid = build_gird(infected_positions, current_position)
         for line in grid:
             print(line)
         print()
@@ -48,13 +52,14 @@ def virus_1(start_area, num_steps):
 
 
     print(infected_positions)
-    plot_grid(infected_positions)
 
     directions = {"n": (0, -1), "e": (1, 0), "s": (0, 1), "w": (-1, 0)}
     turn_right = {"n": "e", "e": "s", "s": "w", "w": "n"}
     turn_left = {"n": "w", "e": "n", "s": "e", "w": "s"}
     current_position = center, center
     current_direction = "n"
+
+    plot_grid(infected_positions, current_position)
 
     infection_counter = 0
     for step in range(num_steps):
@@ -70,7 +75,7 @@ def virus_1(start_area, num_steps):
         dx, dy = directions[current_direction]
         current_position = current_position[0] + dy, current_position[1] + dx
 
-        plot_grid(infected_positions)
+        plot_grid(infected_positions, current_direction)
 
 
     print(f"{infection_counter}/{num_steps}")
