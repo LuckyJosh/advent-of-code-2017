@@ -156,6 +156,7 @@ def virus_2(start_area, num_steps):
 
         if current_direction in flagged_positions:
             current_direction = turn_back[current_direction]
+            print("hier")
             flagged_positions.discard(current_position)
 
         elif current_position in infected_positions:
@@ -167,12 +168,18 @@ def virus_2(start_area, num_steps):
             # current_direction = current_direction
             weakend_positions.discard(current_position)
             infected_positions.add(current_position)
+            infection_counter += 1
         else:
             current_direction = turn_left[current_direction]
             weakend_positions.add(current_position)
 
         dx, dy = directions[current_direction]
         current_position = current_position[0] + dy, current_position[1] + dx
+        print(current_direction)
+        print(f"{current_position[0] - dy, current_position[1] - dx} --> {current_position}")
+        print(infected_positions)
+        print(weakend_positions)
+        print(flagged_positions)
 
         plot_grid(infected_positions, weakend_positions, flagged_positions, current_position)
 
@@ -187,7 +194,7 @@ def main():
     input_ = "..#\n#..\n..."
     print("Input:\n", input_)
     print("Output", virus_1(input_, 10000))
-    print("Output", virus_2(input_, 5))
+    print("Output", virus_2(input_, 7))
 
 
 if __name__ == '__main__':
