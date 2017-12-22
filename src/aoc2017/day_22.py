@@ -50,7 +50,7 @@ def virus_1(start_area, num_steps):
     print(infected_positions)
     plot_grid(infected_positions)
 
-    directions = {"n": (0, 1), "e": (1, 0), "s": (0, -1), "w": (-1, 0)}
+    directions = {"n": (0, -1), "e": (1, 0), "s": (0, 1), "w": (-1, 0)}
     turn_right = {"n": "e", "e": "s", "s": "w", "w": "n"}
     turn_left = {"n": "w", "e": "n", "s": "e", "w": "s"}
     current_position = center, center
