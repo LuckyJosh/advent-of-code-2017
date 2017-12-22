@@ -25,8 +25,6 @@ def virus_1(start_area, num_steps):
             ymin = min(ymin, y)
 
         size = max(xmax - xmin, ymax - ymin) + 1
-        print(size)
-        print(current_position)
         grid = []
         for i in range(size):
             line = []
@@ -35,7 +33,6 @@ def virus_1(start_area, num_steps):
                 line.append(char)
             grid.append(line)
         for y, x in infected_positions:
-            print(y - ymin, x - xmin)
             grid[y - ymin][x - xmin] = " # " if (y, x) != current_position else "(#)"
         return grid
 
