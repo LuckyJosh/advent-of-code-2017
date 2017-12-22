@@ -194,7 +194,7 @@ def main():
     #input_ = "..#\n#..\n..."
     print("Input:\n", input_)
     print("Output", virus_1(input_, 10000))
-    print("Output", virus_2(input_, 1000000))
+    print("Output", virus_2(input_, 10000000))
 
 
 if __name__ == '__main__':
