@@ -120,8 +120,8 @@ def virus_2(start_area, num_steps):
                     grid[y - ymin][x - xmin] = " F " if (y, x) != current_position else "(F)"
         return grid
 
-    def plot_grid(infected_positions, current_direction):
-        grid = build_gird(infected_positions, current_position)
+    def plot_grid(infected_positions, weakend_positions, flagged_positions, current_position):
+        grid = build_gird(infected_positions, weakend_positions, flagged_positions, current_position)
         size = len(grid)
         print("---"*size)
         for line in grid:
@@ -183,7 +183,7 @@ def main():
     #input_ = "..#\n#..\n..."
     print("Input:\n", input_)
     print("Output", virus_1(input_, 10000))
-    print("Output", virus_2(input_), 5)
+    print("Output", virus_2(input_, 5))
 
 
 if __name__ == '__main__':
