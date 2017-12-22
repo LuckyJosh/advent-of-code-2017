@@ -75,7 +75,7 @@ def virus_1(start_area, num_steps):
         dx, dy = directions[current_direction]
         current_position = current_position[0] + dy, current_position[1] + dx
 
-        plot_grid(infected_positions, current_direction)
+    plot_grid(infected_positions, current_direction)
 
 
     print(f"{infection_counter}/{num_steps}")
