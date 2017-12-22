@@ -62,6 +62,10 @@ def fractral_1(rules, num_iterations=5):
                 rules_extension[new_input] = rule_output
 
     rules.update(rules_extension)
+    with open("extended_rules.txt", "w") as f:
+        for k, v in rules.items():
+            f.write(f"{k} => {v}\n")
+
     # print(rules)
     #start_pattern = [".#.", "..#", "###"]
 
@@ -79,27 +83,25 @@ def fractral_1(rules, num_iterations=5):
 
 
     for it in tqdm(range(num_iterations)):
-        # print(f"Iteration {it}")
+        print(f"Iteration {it}")
         size = len(pattern)
-        # print("pattern size:", size)
-        # print("pattern:")
-        # print(pattern)
+        print("pattern size:", size)
+        print("pattern:")
+        print(pattern)
 
         if size % 2 == 0:
-            # print("Size divisible by 2")
+            print("Size divisible by 2")
             indices = np.arange(size)
 
             num_parts = size // 2
             split_indicies = np.split(indices, [2 * (i + 1) for i in range(0, num_parts)])[:-1]
-
+            print(split_indicies)
             tiled_indicies = get_tiled_indicies(split_indicies)
+            print(tiled_indicies)
 
             tiled_pattern = [pattern[idx] for idx in tiled_indicies]
 
-            # print(f"tiled_patterns:{len(tiled_pattern)}")
-            #for pat in tiled_pattern:
-                # print(pat);# print()
-
+            print(f"tiled_patterns:{len(tiled_pattern)}")
 
             new_pattern = np.zeros((num_parts*3, num_parts*3), dtype='<U1')
             indices_new = np.arange(3*num_parts)
@@ -110,15 +112,18 @@ def fractral_1(rules, num_iterations=5):
             for idx_new, tile in zip(tiled_indicies_new, tiled_pattern):
 
                 new_chars = [char for char in rules["".join(tile.flatten())]]
-
+                print("old tile:")
+                print(tile)
+                print("new  tile:")
+                print(np.array(new_chars).reshape(3, 3))
                 new_pattern[idx_new] = np.array(new_chars).reshape(3, 3)
             pattern = new_pattern
-            # print("new pattern")
-            # print(pattern)
-            # print(pattern.shape)
+            print("new pattern")
+            print(pattern)
+            print(pattern.shape)
 
         elif size % 3 == 0:
-            # print("Size divisible by 3")
+            print("Size divisible by 3")
 
             indices = np.arange(size)
 
@@ -130,8 +135,7 @@ def fractral_1(rules, num_iterations=5):
             tiled_pattern = [pattern[idx] for idx in tiled_indicies]
 
             # print(f"tiled_patterns:{len(tiled_pattern)}")
-            #for pat in tiled_pattern:
-                # print(pat);# print()
+
 
             new_pattern = np.zeros((num_parts*4, num_parts*4), dtype='<U1')
             indices_new = np.arange(4*num_parts)
@@ -140,14 +144,18 @@ def fractral_1(rules, num_iterations=5):
 
             for idx_new, tile in zip(tiled_indicies_new, tiled_pattern):
                 new_chars = [char for char in rules["".join(tile.flatten())]]
+                print("old tile:")
+                print(tile)
+                print("new  tile:")
+                print(np.array(new_chars).reshape(4, 4))
                 new_pattern[idx_new] = np.array(new_chars).reshape(4, 4)
             pattern = new_pattern
-            # print("new pattern")
-            # print(pattern)
-            # print(pattern.shape)
+            print("new pattern")
+            print(pattern)
+            print(pattern.shape)
+        print(np.sum(pattern == "#"))
 
     return np.sum(pattern == "#")
-
 
 
 
@@ -156,11 +164,13 @@ def fractral_2(rules, num_iterations=18):
 
 @click.command()
 def main():
-    input_ = get_input(21)
+    input_ = "../.. => ..#/#../.#.\n#./.. => #../#../...\n##/.. => ###/#.#/#..\n.#/#. => ###/##./.#.\n##/#. => .../.#./..#\n##/## => ##./#.#/###\n.../.../... => ##../.#../#.#./....\n#../.../... => ..../##.#/...#/##.#\n.#./.../... => ###./####/#.../#..#\n##./.../... => ###./.##./...#/..##\n#.#/.../... => .###/.##./#.../#.##\n###/.../... => ##.#/#..#/#.#./#.##\n.#./#../... => #.#./.###/#.../#.##\n##./#../... => #.../####/#.##/....\n..#/#../... => #.##/..#./...#/...#\n#.#/#../... => #.##/####/.#.#/#.#.\n.##/#../... => #.../##../##.#/.##.\n###/#../... => ..../#.#./.###/#...\n.../.#./... => .#.#/#..#/##../#.##\n#../.#./... => ###./.###/.#.#/..#.\n.#./.#./... => ..##/.##./..##/.#.#\n##./.#./... => ..#./##../###./...#\n#.#/.#./... => ..##/.##./.###/###.\n###/.#./... => ..#./.###/###./#.##\n.#./##./... => ###./..../.#../#...\n##./##./... => .#.#/##../##.#/...#\n..#/##./... => ##.#/.##./.###/..##\n#.#/##./... => .###/..#./#.##/####\n.##/##./... => ##.#/..#./..##/###.\n###/##./... => ..../.#.#/.#../#...\n.../#.#/... => ###./.#.#/.#../#.##\n#../#.#/... => ####/#..#/..../....\n.#./#.#/... => #.../..##/#.##/#.#.\n##./#.#/... => #.#./###./##../#.#.\n#.#/#.#/... => ...#/.##./.##./.#..\n###/#.#/... => ..../.##./####/#.#.\n.../###/... => .###/.#../.###/#.##\n#../###/... => ..##/..##/.##./##..\n.#./###/... => .#.#/..#./..##/##.#\n##./###/... => ...#/#.##/#.#./##.#\n#.#/###/... => #.##/.##./...#/###.\n###/###/... => ##../...#/..##/####\n..#/.../#.. => #.##/#.../.#../#.#.\n#.#/.../#.. => .##./.##./.#.#/.##.\n.##/.../#.. => .#.#/#.##/...#/##.#\n###/.../#.. => ##../..#./...#/##..\n.##/#../#.. => ##../..##/#..#/#..#\n###/#../#.. => ##../..#./#.#./....\n..#/.#./#.. => .##./##.#/##../####\n#.#/.#./#.. => ####/...#/.#.#/..#.\n.##/.#./#.. => .#.#/..#./##.#/.#..\n###/.#./#.. => #.../#.##/..../##.#\n.##/##./#.. => #.#./#.#./#.##/#.#.\n###/##./#.. => ...#/###./.##./.#.#\n#../..#/#.. => ####/####/..../.##.\n.#./..#/#.. => #.##/...#/..#./####\n##./..#/#.. => ..#./#.../..##/####\n#.#/..#/#.. => #.../#.##/#.##/..##\n.##/..#/#.. => ####/..../##../####\n###/..#/#.. => ..../##.#/.##./####\n#../#.#/#.. => ...#/..##/###./#..#\n.#./#.#/#.. => #..#/..#./.###/##.#\n##./#.#/#.. => ###./####/#.##/..#.\n..#/#.#/#.. => ##../##.#/..##/.##.\n#.#/#.#/#.. => .#.#/.##./#.../##.#\n.##/#.#/#.. => .#.#/#..#/.##./..#.\n###/#.#/#.. => ...#/.#../.##./##.#\n#../.##/#.. => ###./##../#.#./####\n.#./.##/#.. => .#../##../#.#./.#.#\n##./.##/#.. => ##.#/.#../.#.#/####\n#.#/.##/#.. => ####/.#.#/..../....\n.##/.##/#.. => ####/##../#..#/####\n###/.##/#.. => .###/##.#/.#../#.##\n#../###/#.. => #..#/###./####/.#.#\n.#./###/#.. => ..##/##../##.#/.#.#\n##./###/#.. => #..#/.#../####/...#\n..#/###/#.. => ##../##.#/...#/#..#\n#.#/###/#.. => ..#./.##./#..#/....\n.##/###/#.. => #..#/#.../..../.#..\n###/###/#.. => ..#./#.##/.##./#...\n.#./#.#/.#. => .#.#/.##./##.#/.##.\n##./#.#/.#. => #..#/.###/.#.#/.##.\n#.#/#.#/.#. => #.../##../#.../.###\n###/#.#/.#. => ###./.###/###./....\n.#./###/.#. => .#../####/...#/##..\n##./###/.#. => ####/###./..../....\n#.#/###/.#. => ...#/.###/..../####\n###/###/.#. => ..../#.../..#./.###\n#.#/..#/##. => #.#./#.../####/#.##\n###/..#/##. => .#.#/#..#/.###/#...\n.##/#.#/##. => ..##/..#./..../##..\n###/#.#/##. => #.#./##.#/####/#..#\n#.#/.##/##. => ..../.#../#.#./##.#\n###/.##/##. => ..../..../.#../##.#\n.##/###/##. => #.#./.###/#.#./#.##\n###/###/##. => ##.#/##.#/.###/..#.\n#.#/.../#.# => #..#/.#../#.../...#\n###/.../#.# => ##../.#../##.#/..#.\n###/#../#.# => ..##/#.#./####/.#..\n#.#/.#./#.# => ...#/...#/#..#/#.#.\n###/.#./#.# => ..../####/.##./.#.#\n###/##./#.# => #..#/.#.#/..##/####\n#.#/#.#/#.# => #.#./..#./...#/.#..\n###/#.#/#.# => ...#/##.#/.###/.#..\n#.#/###/#.# => .#.#/###./.#../.##.\n###/###/#.# => ...#/.###/.#.#/###.\n###/#.#/### => #.##/.#.#/...#/.#..\n###/###/### => ..##/.#../#.#./.#.."
+
+    #input_ = get_input(21)
     #input_ = "../.# => ##./#../...\n.#./..#/### => #..#/..../..../#..#"
     print("Input:\n", input_)
-    print("Output\n", fractral_1(input_))
-    print("Output", fractral_2(input_))
+    print("Output\n", fractral_1(input_, num_iterations=6))
+    #print("Output", fractral_2(input_))
 
 
 if __name__ == '__main__':
