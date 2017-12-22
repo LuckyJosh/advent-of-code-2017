@@ -11,8 +11,9 @@ def virus_1(start_area, num_steps):
     start_area = start_area.split("\n")
     area_size = len(start_area)
 
-    infected_positions = set()
+    center = area_size // 2
 
+    infected_positions = set()
     for i in range(area_size):
         for j in range(area_size):
             if start_area[i][j] == "#":
@@ -20,7 +21,7 @@ def virus_1(start_area, num_steps):
 
     print(infected_positions)
 
-    center = area_size // 2
+
 
     directions = {"n": (0, 1), "e": (1, 0), "s": (0, -1), "w": (-1, 0)}
     turn_right = {"n": "e", "e": "s", "s": "w", "w": "n"}
@@ -28,16 +29,22 @@ def virus_1(start_area, num_steps):
     current_position = center, center
     current_direction = "n"
 
+    infection_counter = 0
     for step in range(num_steps):
-        xf, yf = directions[current_direction]
+
         if current_position in infected_positions:
+            current_direction = turn_right[current_direction]
             infected_positions.discard(current_position)
         else:
+            infection_counter += 1
+            current_direction = turn_left[current_direction]
             infected_positions.add(current_position)
 
+        dx, dy = directions[current_direction]
+        current_position = current_position[0] + dy, current_position[1] + dx
 
-
-    return start_area
+    print(f"{infection_counter}/{num_steps}")
+    return infection_counter
 
 def virus_2(start_area):
     pass
