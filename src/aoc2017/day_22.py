@@ -41,8 +41,11 @@ def virus_1(start_area, num_steps):
 
     def plot_grid(infected_positions, current_direction):
         grid = build_gird(infected_positions, current_position)
+        size = len(grid)
+        print("---"*size)
         for line in grid:
-            print(line)
+            print("".join(line))
+        print("---"*size)
         print()
 
     infected_positions = set()
