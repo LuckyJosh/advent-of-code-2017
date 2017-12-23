@@ -57,7 +57,7 @@ def coprocess_1(instructions):
             x = registers[x]
         if isinstance(y, str):
             y = registers[y]
-        if x > 0:
+        if x != 0:
             i += y
             function_count["jnz"] += 1
         else:
