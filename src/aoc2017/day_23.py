@@ -91,79 +91,10 @@ def coprocess_2(instructions):
 
         parsed_instructions.append((inst_parts[0], tuple(inst_parts[1:])))
 
-    registers = {char: 0 for char in "abcdefgh"}
-    registers["a"] = 1
+    for inst in parsed_instructions:
+        if inst[0] == "set" and inst[1][0] == "b"
+            init_value_b = inst[1][1]
 
-    def set(x, y):
-        nonlocal registers
-        nonlocal i
-        nonlocal function_count
-        if isinstance(y, str):
-            y = registers[y]
-        registers[x] = y
-        function_count["set"] += 1
-        i += 1
-
-    def sub(x, y):
-        nonlocal registers
-        nonlocal i
-        nonlocal function_count
-        if isinstance(y, str):
-            y = registers[y]
-        registers[x] -= y
-        function_count["sub"] += 1
-        i += 1
-
-    def mul(x, y):
-        nonlocal registers
-        nonlocal i
-        nonlocal function_count
-        if isinstance(y, str):
-            y = registers[y]
-        registers[x] *= y
-        function_count["mul"] += 1
-        i += 1
-
-    def jnz(x, y):
-        nonlocal registers
-        nonlocal i
-        nonlocal function_count
-        if isinstance(x, str):
-            x = registers[x]
-        if isinstance(y, str):
-            y = registers[y]
-        if x != 0:
-            i += y
-            function_count["jnz"] += 1
-        else:
-            i += 1
-
-    function_count = {"set": 0,
-                      "sub": 0,
-                      "mul": 0,
-                      "jnz": 0}
-    operations = {"set": set,
-                  "sub": sub,
-                  "mul": mul,
-                  "jnz": jnz}
-
-    i = 0
-    iter_counter = 0
-    while 0 <= i < len(parsed_instructions):
-        current_inst = parsed_instructions[i]
-        # print("Current Instruction:", current_inst)
-        # print(i)
-        operations[current_inst[0]](*current_inst[1])
-        iter_counter += 1
-        if iter_counter % 1000000 == 0:
-            print("Current value h:", registers["h"])
-        else:
-            print(f"......{iter_counter}", end="\r")
-
-
-
-
-    return registers["h"]
 
 @click.command()
 def main():
