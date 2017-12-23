@@ -97,7 +97,7 @@ def coprocess_2(instructions):
     value_b_change = 17
     value_h = 0
     for b in tqdm(range(init_value_b, init_value_c + 1, value_b_change)):
-        for e in tqdm(range(2, b + 1)):
+        for e in tqdm(range(2, b)):
             if b % e == 0:
                 value_h += 1
                 break
