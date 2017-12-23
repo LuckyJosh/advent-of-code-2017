@@ -37,7 +37,7 @@ jnz 1 -23                   ALWAYS goto l10
     solang bis e = b => e = (2, 3, ..., b)
     
     16 -> 18:
-        f = 0, wenn e * g(=d) = b  => d = b/e
+        f = 0, wenn e * g(=d) = b  => d = b/e ABER nur einmal pro innerer Schleife
 
 25 -> 12:
     solange bis d = b => d = (2, 3, ..., b)
