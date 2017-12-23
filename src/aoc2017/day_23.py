@@ -3,7 +3,7 @@
 
 import click
 import numpy as np
-
+from tqdm import tqdm
 from .download_input import get_input
 
 
@@ -96,8 +96,8 @@ def coprocess_2(instructions):
     init_value_c = init_value_b + 17000
     value_b_change = 17
 
-    for b in range(init_value_b, init_value_c, value_b_change):
-        for e in range(2, b):
+    for b in tqdm(range(init_value_b, init_value_c, value_b_change)):
+        for e in tqdm(range(2, b)):
             if b % e == 0:
                 h += 1
     return h
