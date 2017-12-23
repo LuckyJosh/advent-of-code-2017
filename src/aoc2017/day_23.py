@@ -91,9 +91,16 @@ def coprocess_2(instructions):
 
         parsed_instructions.append((inst_parts[0], tuple(inst_parts[1:])))
 
-    for inst in parsed_instructions:
-        if inst[0] == "set" and inst[1][0] == "b"
-            init_value_b = inst[1][1]
+    # @stability: @hack: @incomplete: This should be read from input
+    init_value_b = 1007900
+    init_value_c = init_value_b + 17000
+    value_b_change = 17
+
+    for b in range(init_value_b, init_value_c, value_b_change):
+        for e in range(2, b):
+            if b % e == 0:
+                h += 1
+    return h
 
 
 @click.command()
@@ -106,4 +113,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
