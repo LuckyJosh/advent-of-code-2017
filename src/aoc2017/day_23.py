@@ -92,7 +92,7 @@ def coprocess_2(instructions):
         parsed_instructions.append((inst_parts[0], tuple(inst_parts[1:])))
 
     # @stability: @hack: @incomplete: This should be read from input
-    init_value_b = 1007900
+    init_value_b = 79*100 + 100000
     init_value_c = init_value_b + 17000
     value_b_change = 17
     value_h = 0
