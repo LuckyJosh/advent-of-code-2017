@@ -1,0 +1,54 @@
+set b 79
+set c b
+jnz a 2
+jnz 1 5
+mul b 100
+sub b -100000
+set c b
+sub c -17000
+--------------
+set f 1                     f = 1
+    set d 2                 d = 2
+    set e 2                 e = 2
+        set g d             g = d (= 2)
+            mul g e         g = g * e (= 2 * 2 = 4)
+            sub g b         g = g - b (= 4 - b)
+            jnz g 2         if  g != 0 (= b == 4): goto l18 else goto l17 
+                set f 0     if b == 4: f = 0
+            sub e -1        e = e + 1 (= 3)
+            set g e         g = e (= 3)
+            sub g b         g = g - b (= 3 - b) [= 3 - 4] (if b != 4) [if b == 4] 
+        jnz g -8            if g != 0 (= b == 3 ) goto l13 else goto l22 | last jump condition: b == 4 IS
+        sub d -1            d = d - 1 (= 2 - 1 = 1)
+        set g d             g = d (= 1)
+        sub g b             g = g - b (= 1 - b)
+    jnz g -13               if g != 0 (= b == 1 ) goto l11 else goto l26 | last jump condition: b == 3
+    jnz f 2                 if f != 0 (l16 did not jump => b == 4) goto l28 else goto l27
+        sub h -1            h = h + 1
+    set g b                 g = b !(= 1 (wg. l25))
+    sub g c                 g = g - c (= b - 1024900)
+    jnz g 2                 if  g != 0 =(g == c (= b == c)) goto l32 else l31
+        jnz 1 3             TERMITATE
+    sub b -17               b = b - 17
+jnz 1 -23                   ALWAYS goto l10
+
+
+21 -> 13:
+    solang bis e = b => e = (2, 3, ..., b)
+    
+    16 -> 18:
+        f = 0, wenn e * g(=d) = b  => d = b/e
+
+25 -> 12:
+    solange bis d = b => d = (2, 3, ..., b)
+    für jede Schleife werden alle e in 21->13 durch probiert => (b - 2)**2
+
+26 -> 28: h += 1 jedes mal wenn e*d == b war: immer wenn e bzw. d ein Teiler von b ist
+          es werden alle Zahlen 2 bis b durch iteriert (=> alle Teilerpaare außer (1,b) sind darin enthalten
+          es gibt also genauso viele Paare wie Teiler von 2 bis b)
+          b erhöht sich nach jedem Durchlauf um 17
+30 -> 32: TERMINIERT, wenn b == c (:conts=1024900)
+
+33 -> 10: 1000 mal für b = (b, b+17, ..., c=(b + 17000)) => 1000*(b - 2)*(b - 2) = 1'015'858'378'404'000
+        
+

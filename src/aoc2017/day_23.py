@@ -148,11 +148,20 @@ def coprocess_2(instructions):
                   "jnz": jnz}
 
     i = 0
+    iter_counter = 0
     while 0 <= i < len(parsed_instructions):
         current_inst = parsed_instructions[i]
-        print("Current Instruction:", current_inst)
-        print(i)
+        # print("Current Instruction:", current_inst)
+        # print(i)
         operations[current_inst[0]](*current_inst[1])
+        iter_counter += 1
+        if iter_counter % 1000000 == 0:
+            print("Current value h:", registers["h"])
+        else:
+            print(f"......{iter_counter}", end="\r")
+
+
+
 
     return registers["h"]
 
