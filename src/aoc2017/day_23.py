@@ -95,12 +95,13 @@ def coprocess_2(instructions):
     init_value_b = 1007900
     init_value_c = init_value_b + 17000
     value_b_change = 17
-    value_h = 0
-    for b in tqdm(range(init_value_b, init_value_c + 1, value_b_change)):
-        for e in tqdm(range(2, b + 1)):
-            if b % e == 0:
-                value_h += 1
 
+    all_b_values = np.arange(init_value_b, init_value_c + 1, value_b_change)
+    all_d_values_one_iter = np.arange(2, init_value_c + 1).reshape(-1, 1)
+    all_d_values = np.repeat(all_d_values_one_iter, all_b_values.size, axis=1)
+    mod_values = np.mod(all_b_values, all_d_values)
+
+    value_h = np.sum(mod_values == 0)
     return value_h
 
 
