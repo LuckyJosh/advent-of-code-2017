@@ -96,10 +96,11 @@ def coprocess_2(instructions):
     init_value_c = init_value_b + 17000
     value_b_change = 17
     value_h = 0
-    for b in tqdm(range(init_value_b, init_value_c, value_b_change)):
-        for e in tqdm(range(2, b)):
+    for b in tqdm(range(init_value_b, init_value_c + 1, value_b_change)):
+        for e in tqdm(range(2, b + 1)):
             if b % e == 0:
                 value_h += 1
+
     return value_h
 
 
