@@ -30,7 +30,7 @@ def brigdes_1(components):
     while not finished:
         current_last_component = bridge[-1]
         current_connection = current_last_component[1]
-        current_next = (-1,-1)
+        current_next = (-1, -1)
         for component in components:
             if current_connection in component:
                 if sum(component) > sum(current_next):
@@ -43,8 +43,7 @@ def brigdes_1(components):
         else:
             finished = True
 
-
-    print("--".join(bridge))
+    print("--".join([str(component) for component in bridge]))
     return sum(flatten(bridge))
 
 
