@@ -36,17 +36,23 @@ def brigdes_1(components):
             current_connections = [current_last_component[1]]
         print(current_connections)
 
-
         current_next = []
+        components_used = components
         for current_connection in current_connections:
-            for component in components:
-                if current_connection == component[0]:
-                    current_next.append(component)
-                    components.remove(component)
-                elif current_connection == component[-1]:
-                    current_next.append((component[-1], component[0]))
-                    components.remove(component)
 
+            print("components", components)
+            for component in components:
+                print("current check", component)
+                if current_connection == component[0]:
+                    print("possible component", component)
+                    current_next.append(component)
+                    components_used.remove(component)
+                elif current_connection == component[-1]:
+                    print("possible component", component)
+                    current_next.append((component[-1], component[0]))
+                    components_used.remove(component)
+            components = components_used
+            print("components", components)
             print(current_next)
 
         if current_next:
@@ -54,7 +60,7 @@ def brigdes_1(components):
         else:
             finished = True
 
-    for i
+
 
     print("--".join([str(component) for component in bridge]))
     return sum(flatten(bridge))
