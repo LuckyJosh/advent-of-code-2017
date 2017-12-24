@@ -48,7 +48,8 @@ def brigdes_1(components):
                 else:
                     current_components_.remove(next_component)
 
-                bridge_ends.append(build_bridges(current_bridge + [next_component], current_components_))
+                bridge_ends.append("".join([str(part) for part in build_bridges(current_bridge + [next_component], current_components_)]))
+
             return bridge_ends
 
     bridge = [(0, 0)]
@@ -71,7 +72,7 @@ def brigdes_1(components):
 
 
     #print("--".join([str(component) for component in bridge]))
-    return sum(flatten(bridge))
+    return None
 
 
 def brigdes_2(components):
