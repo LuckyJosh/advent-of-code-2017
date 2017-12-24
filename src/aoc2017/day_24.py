@@ -29,16 +29,25 @@ def brigdes_1(components):
     bridge = [(0, 0)]
     while not finished:
         current_last_component = bridge[-1]
-        current_connection = current_last_component[1]
-        current_next = (-1, -1)
-        for component in components:
-            if current_connection in component:
-                if sum(component) > sum(current_next):
-                    current_next = component
+        if isinstance(current_last_component, list):
+            current_connections = [comp[-1] for comp in current_last_component]
+        else:
+            current_connections = [current_last_component[1]]
+        print(current_connections)
+        current_next = []
+
+        for current_connection in current_connections:
+            for component in components:
+                if current_connection == component[0]:
+                    current_next.append(component)
                     components.remove(component)
+                elif current_connection == component[-1]:
+                    current_next.append((component[-1], component[0]))
+                    components.remove(component)
+
             print(current_next)
 
-        if not current_next == (-1, -1):
+        if not current_next:
             bridge.append(current_next)
         else:
             finished = True
