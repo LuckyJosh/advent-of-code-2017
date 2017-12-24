@@ -4,6 +4,7 @@
 import click
 import numpy as np
 
+
 from .download_input import get_input
 
 
@@ -48,25 +49,26 @@ def brigdes_1(components):
                 else:
                     current_components_.remove(next_component)
 
-                bridge_ends.append("".join([str(part) for part in build_bridges(current_bridge + [next_component], current_components_)]))
+                bridge_ends.append(build_bridges(current_bridge + [next_component], current_components_))
 
-            return bridge_ends
+            return "".join([str(part) for part in bridge_ends])
 
     bridge = [(0, 0)]
 
     all_possible_bridges = build_bridges(bridge, components)
-    all_possible_bridges = all_possible_bridges.split("(0,0)")
+    all_possible_bridges = all_possible_bridges.replace("[", "").replace("]", "").split("(0, 0),")
 
-
+    print(all_possible_bridges)
+    print(type(all_possible_bridges))
+    sums = []
     for bridge in all_possible_bridges:
-        print(bridge)
-
-
-
-
+        bridge = [int(part)
+                  for part in bridge.replace("(", "").replace(")", "").replace(" ", "").split(",")
+                  if part]
+        sums.append(sum(bridge))
 
     #print("--".join([str(component) for component in bridge]))
-    return None
+    return max(sums)
 
 
 def brigdes_2(components):
