@@ -24,11 +24,11 @@ def brigdes_1(components):
 
         return flat_form
 
-    print(flatten(components))
+
     finished = False
-    bridge = []
-    #while not finished:
-      #pass
+    bridge = [(0, 0)]
+    while not finished:
+
 
     return components
 
