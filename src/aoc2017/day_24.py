@@ -8,7 +8,27 @@ from .download_input import get_input
 
 
 def brigdes_1(components):
-    components = [tuple(component.split("/")) for component in components.split("\n")]
+    components = [tuple(
+                  [int(part)
+                   for part in component.split("/")])
+                  for component in components.split("\n")]
+
+    def flatten(nested_form):
+        flat_form = []
+        for elem in nested_form:
+            if hasattr(elem, "__iter__"):
+                for e in flatten(elem):
+                    flat_form.append(e)
+            else:
+                flat_form.append(elem)
+
+        return flat_form
+
+    print(flatten(components))
+    finished = False
+    bridge = []
+    #while not finished:
+      #pass
 
     return components
 
