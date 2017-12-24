@@ -8,7 +8,7 @@ from .download_input import get_input
 
 
 def brigdes_1(components):
-    components = [component.split("/") for component in components.split("\n")]
+    components = [tuple(component.split("/")) for component in components.split("\n")]
 
     return components
 
