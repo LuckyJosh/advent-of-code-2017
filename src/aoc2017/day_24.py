@@ -24,45 +24,42 @@ def brigdes_1(components):
 
         return flat_form
 
+    def build_bridges(current_bridge, current_components):
+        current_last_component = current_bridge[-1]
+        current_connection = current_last_component[-1]
+        possible_next_components = []
+        possible_next_component_isflipped = []
+        for component in current_components:
+                if current_connection == component[0]:
+                    possible_next_components.append(component)
+                    possible_next_component_isflipped.append(False)
+                elif current_connection == component[-1]:
+                    possible_next_components.append((component[-1], component[0]))
+                    possible_next_component_isflipped.append(True)
+        if not possible_next_components:
+            return [current_bridge]
+        else:
+            bridge_ends = []
+            for i, next_component in enumerate(possible_next_components):
+                current_components_ = current_components[:]
+
+                if possible_next_component_isflipped[i]:
+                    current_components_.remove((next_component[-1], next_component[0]))
+                else:
+                    current_components_.remove(next_component)
+
+                bridge_ends.append(build_bridges(current_bridge + [next_component], current_components_))
+            return [current_bridge + bridge_end for bridge_end in bridge_ends]
+
 
     finished = False
     bridge = [(0, 0)]
-    while not finished:
-        print("brige:", bridge)
-        current_last_component = bridge[-1]
-        if isinstance(current_last_component, list):
-            current_connections = [comp[-1] for comp in current_last_component]
-        else:
-            current_connections = [current_last_component[1]]
-        print(current_connections)
 
-        current_next = []
-        components_used = components
-        for current_connection in current_connections:
-
-            print("components", components)
-            for component in components:
-                print("current check", component)
-                if current_connection == component[0]:
-                    print("possible component", component)
-                    current_next.append(component)
-                    components_used.remove(component)
-                elif current_connection == component[-1]:
-                    print("possible component", component)
-                    current_next.append((component[-1], component[0]))
-                    components_used.remove(component)
-            components = components_used
-            print("components", components)
-            print(current_next)
-
-        if current_next:
-            bridge.append(current_next)
-        else:
-            finished = True
+    print(build_bridges(bridge, components))
 
 
 
-    print("--".join([str(component) for component in bridge]))
+    #print("--".join([str(component) for component in bridge]))
     return sum(flatten(bridge))
 
 
