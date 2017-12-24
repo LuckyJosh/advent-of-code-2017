@@ -55,13 +55,7 @@ def brigdes_1(components):
     bridge = [(0, 0)]
 
     all_possible_bridges = build_bridges(bridge, components)
-
-    def remove_dimensions(nested):
-        reduced = []
-        if len(nested) == 1:
-            reduced.append[remove_dimensions(nested[0])]
-        else:
-            return nested
+    all_possible_bridges = all_possible_bridges.split("(0,0)")
 
 
     for bridge in all_possible_bridges:
