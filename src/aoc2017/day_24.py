@@ -37,7 +37,7 @@ def brigdes_1(components):
                     possible_next_components.append((component[-1], component[0]))
                     possible_next_component_isflipped.append(True)
         if not possible_next_components:
-            return [current_bridge]
+            return current_bridge
         else:
             bridge_ends = []
             for i, next_component in enumerate(possible_next_components):
@@ -49,13 +49,24 @@ def brigdes_1(components):
                     current_components_.remove(next_component)
 
                 bridge_ends.append(build_bridges(current_bridge + [next_component], current_components_))
-            return [current_bridge + bridge_end for bridge_end in bridge_ends]
+            return bridge_ends
 
-
-    finished = False
     bridge = [(0, 0)]
 
-    print(build_bridges(bridge, components))
+    all_possible_bridges = build_bridges(bridge, components)
+
+    def remove_dimensions(nested):
+        reduced = []
+        if len(nested) == 1:
+            reduced.append[remove_dimensions(nested[0])]
+        else:
+            return nested
+
+
+    for bridge in all_possible_bridges:
+        print(bridge)
+
+
 
 
 
