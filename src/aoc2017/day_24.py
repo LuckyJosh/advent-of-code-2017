@@ -28,9 +28,24 @@ def brigdes_1(components):
     finished = False
     bridge = [(0, 0)]
     while not finished:
+        current_last_component = bridge[-1]
+        current_connection = current_last_component[1]
+        current_next = (-1,-1)
+        for component in components:
+            if current_connection in component:
+                if sum(component) > sum(current_next):
+                    current_next = component
+                    components.remove(component)
+            print(current_next)
+
+        if not current_next == (-1, -1):
+            bridge.append(current_next)
+        else:
+            finished = True
 
 
-    return components
+    print("--".join(bridge))
+    return sum(flatten(bridge))
 
 
 def brigdes_2(components):
