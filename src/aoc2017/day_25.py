@@ -4,6 +4,7 @@
 import click
 import numpy as np
 import re
+from collections import defaultdict
 
 regex_header = r"Begin in state (?P<start_state>[A-Z]).\nPerform a diagnostic checksum after (?P<checksum_steps>\d) steps.\n\n"
 regex_rules = regex = r"(?:In state (\w):)?(?:\n\s*If the current value is (\d):\n\s*-\sWrite the value (\d).\n\s*-\sMove one slot to the (\w{4,6}).\n\s*-\sContinue with state (\w).)"
@@ -19,13 +20,18 @@ def turing_1(blueprint):
     header_match = re.match(regex_header, used_blueprint)
     blueprint_data = header_match.groupdict()
     used_blueprint = used_blueprint[header_match.end():]
-    rule_parts = ["current_state", "condition", "new_value", "move_direction", "new_state"]
+    rule_parts = ["value", "direction", "state"]
 
     blueprint_rules = re.findall(regex_rules, used_blueprint)
-    parsed_blueprint_rules = {}
+    parsed_blueprint_rules = defaultdict(dict)
+    for i, rule in enumerate(blueprint_rules):
+        rule_state = rule[0] or list(parsed_blueprint_rules.keys())[-1]
+        condition_rule = {rule[1]: dict(zip(rule_parts, rule[2:]))}
+        parsed_blueprint_rules[rule_state].update(condition_rule)
 
 
-    return blueprint_data, blueprint_rules
+
+    return blueprint_data, parsed_blueprint_rules
 
 def turing_2(blueprint):
     pass
