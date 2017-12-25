@@ -34,6 +34,9 @@ def turing_1(blueprint):
     directions = {"left": -1, "right": 1}
     one_positions = set()
     for step in range(int(blueprint_data["checksum_steps"])):
+        print("state", state)
+        print("pos", current_position)
+        print("one_pos", one_positions)
         current_state_rule = parsed_blueprint_rules[state]
         current_value = str(int(current_position in one_positions))
         current_value_rules = current_state_rule[current_value]
