@@ -3,13 +3,29 @@
 
 import click
 import numpy as np
+import re
+
+regex_header = r"Begin in state (?P<start_state>[A-Z]).\nPerform a diagnostic checksum after (?P<checksum_steps>\d) steps.\n\n"
+regex_rules = regex = r"(?:In state (\w):)?(?:\n\s*If the current value is (\d):\n\s*-\sWrite the value (\d).\n\s*-\sMove one slot to the (\w{4,6}).\n\s*-\sContinue with state (\w).)"
+
+
+
 
 from .download_input import get_input
 
 
 def turing_1(blueprint):
-    pass
+    used_blueprint = blueprint
+    header_match = re.match(regex_header, used_blueprint)
+    blueprint_data = header_match.groupdict()
+    used_blueprint = used_blueprint[header_match.end():]
+    rule_parts = ["current_state", "condition", "new_value", "move_direction", "new_state"]
 
+    blueprint_rules = re.findall(regex_rules, used_blueprint)
+    parsed_blueprint_rules = {}
+
+
+    return blueprint_data, blueprint_rules
 
 def turing_2(blueprint):
     pass
