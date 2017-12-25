@@ -40,7 +40,7 @@ def turing_1(blueprint):
         current_state_rule = parsed_blueprint_rules[state]
         current_value = str(int(current_position in one_positions))
         current_value_rules = current_state_rule[current_value]
-        if current_value_rules["value"] == 1:
+        if current_value_rules["value"] == "1":
             one_positions.add(current_position)
         else:
             one_positions.discard(current_position)
