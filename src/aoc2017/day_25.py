@@ -6,7 +6,7 @@ import numpy as np
 import re
 from collections import defaultdict
 
-regex_header = r"Begin in state (?P<start_state>[A-Z]).\nPerform a diagnostic checksum after (?P<checksum_steps>\d) steps.\n\n"
+regex_header = r"Begin in state (?P<start_state>[A-Z]).\nPerform a diagnostic checksum after (?P<checksum_steps>\d*) steps.\n\n"
 regex_rules = regex = r"(?:In state (\w):)?(?:\n\s*If the current value is (\d):\n\s*-\sWrite the value (\d).\n\s*-\sMove one slot to the (\w{4,6}).\n\s*-\sContinue with state (\w).)"
 
 
@@ -60,6 +60,7 @@ def turing_1(blueprint):
     current_position = 0
     directions = {"left": -1, "right": 1}
     one_positions = set()
+    print(generate_band(one_positions, current_position))
     for step in range(int(blueprint_data["checksum_steps"])):
         current_state_rule = parsed_blueprint_rules[state]
         current_value = str(int(current_position in one_positions))
@@ -70,7 +71,7 @@ def turing_1(blueprint):
             one_positions.discard(current_position)
         state = current_value_rules["state"]
         current_position += directions[current_value_rules["direction"]]
-        print(generate_band(one_positions, current_position))
+    print(generate_band(one_positions, current_position))
 
 
     return len(one_positions)
@@ -80,8 +81,8 @@ def turing_2(blueprint):
 
 @click.command()
 def main():
-    #input_ = get_input(25)
-    input_ = "Begin in state A.\nPerform a diagnostic checksum after 6 steps.\n\nIn state A:\n  If the current value is 0:\n    - Write the value 1.\n    - Move one slot to the right.\n    - Continue with state B.\n  If the current value is 1:\n    - Write the value 0.\n    - Move one slot to the left.\n    - Continue with state B.\n\nIn state B:\n  If the current value is 0:\n    - Write the value 1.\n    - Move one slot to the left.\n    - Continue with state A.\n  If the current value is 1:\n    - Write the value 1.\n    - Move one slot to the right.\n    - Continue with state A."
+    input_ = get_input(25)
+    #input_ = "Begin in state A.\nPerform a diagnostic checksum after 6 steps.\n\nIn state A:\n  If the current value is 0:\n    - Write the value 1.\n    - Move one slot to the right.\n    - Continue with state B.\n  If the current value is 1:\n    - Write the value 0.\n    - Move one slot to the left.\n    - Continue with state B.\n\nIn state B:\n  If the current value is 0:\n    - Write the value 1.\n    - Move one slot to the left.\n    - Continue with state A.\n  If the current value is 1:\n    - Write the value 1.\n    - Move one slot to the right.\n    - Continue with state A."
     print("Input:\n", input_)
     print("Input:\n", repr(input_))
     print("Output", turing_1(input_))
