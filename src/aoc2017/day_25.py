@@ -17,6 +17,7 @@ def turing_2(blueprint):
 @click.command()
 def main():
     input_ = get_input(25)
+    print("Input:\n", input_)
     print("Input:\n", repr(input_))
     print("Output", turing_1(input_))
     print("Output", turing_2(input_))
