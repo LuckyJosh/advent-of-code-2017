@@ -29,9 +29,23 @@ def turing_1(blueprint):
         condition_rule = {rule[1]: dict(zip(rule_parts, rule[2:]))}
         parsed_blueprint_rules[rule_state].update(condition_rule)
 
+    state = blueprint_data["start_state"]
+    current_position = 0
+    directions = {"left": -1, "right": 1}
+    one_positions = set()
+    for step in range(int(blueprint_data["checksum_steps"])):
+        current_state_rule = parsed_blueprint_rules[state]
+        current_value = str(int(current_position in one_positions))
+        current_value_rules = current_state_rule[current_value]
+        if current_value_rules["value"] == 1:
+            one_positions.add(current_position)
+        else:
+            one_positions.discard(current_position)
+        state = current_value_rules["state"]
+        current_position += directions[current_value_rules["direction"]]
 
 
-    return blueprint_data, parsed_blueprint_rules
+    return len(one_positions)
 
 def turing_2(blueprint):
     pass
