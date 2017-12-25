@@ -15,6 +15,7 @@ regex_rules = regex = r"(?:In state (\w):)?(?:\n\s*If the current value is (\d):
 from .download_input import get_input
 
 
+
 def turing_1(blueprint):
     used_blueprint = blueprint
     header_match = re.match(regex_header, used_blueprint)
@@ -29,14 +30,27 @@ def turing_1(blueprint):
         condition_rule = {rule[1]: dict(zip(rule_parts, rule[2:]))}
         parsed_blueprint_rules[rule_state].update(condition_rule)
 
+    def generate_band(one_positions, current_position):
+        max_pos = 0
+        for pos in one_positions:
+            max_pos = max(max_pos, pos)
+        band = [" 0 "]*max_pos
+        for pos in one_positions:
+            band[pos + max_pos] = " 1 "
+
+        if current_position in one_positions:
+            band[current_position + max_pos] = "[1]"
+        else:
+            band[current_position + max_pos] = "[0]"
+        return band
+
+
     state = blueprint_data["start_state"]
     current_position = 0
     directions = {"left": -1, "right": 1}
     one_positions = set()
     for step in range(int(blueprint_data["checksum_steps"])):
-        print("state", state)
-        print("pos", current_position)
-        print("one_pos", one_positions)
+        print(generate_band(one_positions, current_position))
         current_state_rule = parsed_blueprint_rules[state]
         current_value = str(int(current_position in one_positions))
         current_value_rules = current_state_rule[current_value]
