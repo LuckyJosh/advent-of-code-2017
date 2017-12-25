@@ -31,18 +31,24 @@ def turing_1(blueprint):
         parsed_blueprint_rules[rule_state].update(condition_rule)
 
     def generate_band(one_positions, current_position):
+        min_pos = 0
         max_pos = 0
         for pos in one_positions:
+            min_pos = min(min_pos, pos)
             max_pos = max(max_pos, pos)
-        band = [" 0 "]*max_pos
+        min_pos = min(min_pos, current_position)
+        max_pos = max(max_pos, current_position)
+
+
+        band = [" 0 "]*(max_pos - min_pos + 1)
         for pos in one_positions:
-            band[pos + max_pos] = " 1 "
+            band[pos + min_pos] = " 1 "
 
         if current_position in one_positions:
-            band[current_position + max_pos] = "[1]"
+            band[current_position + min_pos] = "[1]"
         else:
-            band[current_position + max_pos] = "[0]"
-        return band
+            band[current_position + min_pos] = "[0]"
+        return "".join(band)
 
 
     state = blueprint_data["start_state"]
