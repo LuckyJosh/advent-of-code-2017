@@ -42,12 +42,17 @@ def turing_1(blueprint):
 
         band = [" 0 "]*(max_pos - min_pos + 1)
         for pos in one_positions:
-            band[pos + min_pos] = " 1 "
+            band[pos - min_pos] = " 1 "
+
+        if 0 in one_positions:
+            band[0 - min_pos] = "(1)"
+        else:
+            band[0 - min_pos] = "(0)"
 
         if current_position in one_positions:
-            band[current_position + min_pos] = "[1]"
+            band[current_position - min_pos] = "[1]"
         else:
-            band[current_position + min_pos] = "[0]"
+            band[current_position - min_pos] = "[0]"
         return "".join(band)
 
 
@@ -56,7 +61,6 @@ def turing_1(blueprint):
     directions = {"left": -1, "right": 1}
     one_positions = set()
     for step in range(int(blueprint_data["checksum_steps"])):
-        print(generate_band(one_positions, current_position))
         current_state_rule = parsed_blueprint_rules[state]
         current_value = str(int(current_position in one_positions))
         current_value_rules = current_state_rule[current_value]
@@ -66,6 +70,7 @@ def turing_1(blueprint):
             one_positions.discard(current_position)
         state = current_value_rules["state"]
         current_position += directions[current_value_rules["direction"]]
+        print(generate_band(one_positions, current_position))
 
 
     return len(one_positions)
