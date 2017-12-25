@@ -5,6 +5,7 @@ import click
 import numpy as np
 import re
 from collections import defaultdict
+from tqdm import tqdm
 
 regex_header = r"Begin in state (?P<start_state>[A-Z]).\nPerform a diagnostic checksum after (?P<checksum_steps>\d*) steps.\n\n"
 regex_rules = regex = r"(?:In state (\w):)?(?:\n\s*If the current value is (\d):\n\s*-\sWrite the value (\d).\n\s*-\sMove one slot to the (\w{4,6}).\n\s*-\sContinue with state (\w).)"
@@ -61,7 +62,7 @@ def turing_1(blueprint):
     directions = {"left": -1, "right": 1}
     one_positions = set()
     print(generate_band(one_positions, current_position))
-    for step in range(int(blueprint_data["checksum_steps"])):
+    for step in tqdm(range(int(blueprint_data["checksum_steps"]))):
         current_state_rule = parsed_blueprint_rules[state]
         current_value = str(int(current_position in one_positions))
         current_value_rules = current_state_rule[current_value]
